@@ -18,3 +18,33 @@ body {
 .tabs.border-top {
   border-top: 1px solid #ddd !important;
 }
+
+/*popup*/
+
+.front-screen{
+  width: 100% !important;
+  height: 100% !important;
+  background: #ef473a  !important;
+  opacity: 0.7;
+
+
+}
+
+/*
+.popup-head{
+  height: 120px !important;
+  background: red  !important;
+}
+.popup-title {
+  color: #fff !important;
+}
+*/
+.popup-body{
+  background: none !important;
+  opacity: 1 !important;
+}
+/*
+.popup-buttons {
+  height: 120px !important;
+}
+*/

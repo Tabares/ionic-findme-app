@@ -27,7 +27,8 @@ angular.module('starter').controller('MapController',
         if(!InstructionsService.instructions.newLocations.seen) {
 
           var instructionsPopup = $ionicPopup.alert({
-            title: 'Add Locations',
+            title: 'Find Me!!!',
+            cssClass: 'front-screen',
             template: InstructionsService.instructions.newLocations.text
           });
           instructionsPopup.then(function(res) {
@@ -40,7 +41,7 @@ angular.module('starter').controller('MapController',
           defaults: {
             tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
             maxZoom: 18,
-            zoomControlPosition: 'bottomleft'
+            zoomControlPosition: 'topright'
           },
           markers : {},
           events: {
@@ -54,6 +55,34 @@ angular.module('starter').controller('MapController',
         $scope.goTo(0);
 
       });
+
+      $scope.cancel = function(){
+        var instructionsPopup = $ionicPopup.alert({
+          title: 'Find Me!!!',
+          cssClass: 'front-screen',
+          template: InstructionsService.instructions.newLocations.text
+        });
+        $scope.map = {
+          defaults: {
+            tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+            maxZoom: 18,
+            zoomControlPosition: 'topright'
+          },
+          markers : {},
+          events: {
+            map: {
+              enable: ['context'],
+              logic: 'emit'
+            }
+          }
+        };
+
+        $scope.goTo(0);
+      }
+
+      $scope.loadForm = function(){
+
+      }
 
       var Location = function() {
         if ( !(this instanceof Location) ) return new Location();
@@ -78,6 +107,21 @@ angular.module('starter').controller('MapController',
         $scope.newLocation.lng = locationEvent.leafletEvent.latlng.lng;
         $scope.modal.show();
       });
+
+      $scope.loadForm = function(){
+        $cordovaGeolocation
+          .getCurrentPosition()
+          .then(function (position) {
+            $scope.newLocation = new Location();
+            $scope.newLocation.lat = position.coords.latitude;
+            $scope.newLocation.lng = position.coords.longitude;
+          }, function(err) {
+            // error
+            console.log("Location error!");
+            console.log(err);
+          });
+        $scope.modal.show();
+      }
 
       $scope.saveLocation = function() {
         LocationsService.savedLocations.push($scope.newLocation);

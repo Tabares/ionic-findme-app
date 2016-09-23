@@ -14,11 +14,19 @@
 
   </ion-content>
 
-  <ion-footer-bar align-title="left" class="bar-assertive">
-  <h1 class="title">Find me please!!!</h1>
-  <div class="buttons" ng-click="locate();">
-    <button class="button button-icon icon ion-pinpoint"></button>
-  </div>
-</ion-footer-bar>
+  <ion-footer-bar align-title="center" class="bar-assertive">
+    <!--<h1 class="title">Find me please!!!</h1>-->
+
+    <div class="row">
+
+      <div class="button-bar">
+        <a class="button button-icon icon ion-close-circled" ng-click="cancel()"></a>
+        <a class="button button-icon icon ion-archive" ng-click="loadForm()"></a>
+        <a class="button button-icon icon ion-pinpoint" ng-click="locate();"></a>
+      </div>
+
+
+    </div>
+  </ion-footer-bar>
 
 </ion-view>

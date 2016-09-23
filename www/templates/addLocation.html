@@ -20,6 +20,8 @@
           <input type="text" ng-model="newLocation.name" placeholder="What's Happenig?" ng-minlength="1" ng-maxlength="100" required>
         </label>
 
+
+
         <div class="item tabs tabs-secondary tabs-icon-left">
           <a class="tab-item" href="#">
             LAT : {{newLocation.lat | truncate:15}}
@@ -28,6 +30,11 @@
             LNG : {{newLocation.lng | truncate:15}}
           </a>
         </div>
+
+        <label class="item item-input">
+          <span class="input-label">Take a Picture</span>
+          <button class="button  button-balanced" ><span class=" icon ion-ios-camera"></span></button>
+        </label>
 
       </div>
 
