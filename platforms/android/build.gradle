@@ -170,14 +170,15 @@ android {
         if (cdvMinSdkVersion != null) {
             minSdkVersion cdvMinSdkVersion
         }
+        multiDexEnabled true
     }
 
     lintOptions {
       abortOnError false;
     }
 
-    compileSdkVersion cdvCompileSdkVersion
-    buildToolsVersion cdvBuildToolsVersion
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
 
     if (Boolean.valueOf(cdvBuildMultipleApks)) {
         productFlavors {
