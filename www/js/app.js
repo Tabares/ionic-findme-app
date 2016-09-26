@@ -29,6 +29,13 @@ angular.module('starter', ['ionic', 'leaflet-directive', 'ngCordova', 'igTruncat
         controller: 'MapController'
       })
 
+      .state('app.form', {
+        url: "/map",
+        abstract: true,
+        templateUrl: "templates/addLocation.html",
+        controller: 'CameraController'
+      })
+
       .state('app.map', {
         url: "/map",
         views: {

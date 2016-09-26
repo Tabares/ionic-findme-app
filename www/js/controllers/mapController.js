@@ -6,6 +6,7 @@ angular.module('starter').controller('MapController',
     '$ionicPopup',
     'LocationsService',
     'InstructionsService',
+    '$cordovaCamera',
     function(
       $scope,
       $cordovaGeolocation,
@@ -13,9 +14,9 @@ angular.module('starter').controller('MapController',
       $ionicModal,
       $ionicPopup,
       LocationsService,
-      InstructionsService
+      InstructionsService,
+      $cordovaCamera
       ) {
-
       /**
        * Once state loaded, get put map on scope.
        */
@@ -56,6 +57,56 @@ angular.module('starter').controller('MapController',
 
       });
 
+      $scope.shake2 = function(){
+          alert('dfdfsf')
+      };
+
+      //CameraController
+      $scope.takePhoto = function() {
+        var options = {
+          quality: 75,
+          destinationType: Camera.DestinationType.DATA_URL,
+          sourceType: Camera.PictureSourceType.CAMERA,
+          allowEdit: true,
+          encodingType: Camera.EncodingType.JPEG,
+          targetWidth: 300,
+          targetHeight: 300,
+          popoverOptions: CameraPopoverOptions,
+          saveToPhotoAlbum: false
+        };
+
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+          $scope.imgURI = "data:image/jpeg;base64," + imageData;
+        }, function(err) {
+          // An error occured. Show a message to the user
+          alert(err + 'The camara is not working');
+        });
+      }
+
+      $scope.choosePhoto = function() {
+        var options = {
+          quality: 75,
+          destinationType: Camera.DestinationType.DATA_URL,
+          sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+          allowEdit: true,
+          encodingType: Camera.EncodingType.JPEG,
+          targetWidth: 300,
+          targetHeight: 300,
+          popoverOptions: CameraPopoverOptions,
+          saveToPhotoAlbum: false
+        };
+
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+          $scope.imgURI = "data:image/jpeg;base64," + imageData;
+        }, function(err) {
+          // An error occured. Show a message to the user
+          alert(err + 'Error in the storage devices');
+
+        });
+      }
+
+      //CameraController
+
       $scope.cancel = function(){
         var instructionsPopup = $ionicPopup.alert({
           title: 'Find Me!!!',
@@ -78,10 +129,6 @@ angular.module('starter').controller('MapController',
         };
 
         $scope.goTo(0);
-      }
-
-      $scope.loadForm = function(){
-
       }
 
       var Location = function() {
@@ -112,6 +159,7 @@ angular.module('starter').controller('MapController',
         $cordovaGeolocation
           .getCurrentPosition()
           .then(function (position) {
+            $scope.locate();
             $scope.newLocation = new Location();
             $scope.newLocation.lat = position.coords.latitude;
             $scope.newLocation.lng = position.coords.longitude;
@@ -163,7 +211,7 @@ angular.module('starter').controller('MapController',
           .then(function (position) {
             $scope.map.center.lat  = position.coords.latitude;
             $scope.map.center.lng = position.coords.longitude;
-            $scope.map.center.zoom = 15;
+            $scope.map.center.zoom = 18;
 
             $scope.map.markers.now = {
               lat:position.coords.latitude,

@@ -6,6 +6,7 @@ angular.module('starter').controller('MapController',
     '$ionicPopup',
     'LocationsService',
     'InstructionsService',
+    '$cordovaCamera',
     function(
       $scope,
       $cordovaGeolocation,
@@ -13,9 +14,9 @@ angular.module('starter').controller('MapController',
       $ionicModal,
       $ionicPopup,
       LocationsService,
-      InstructionsService
+      InstructionsService,
+      $cordovaCamera
       ) {
-
       /**
        * Once state loaded, get put map on scope.
        */
@@ -27,7 +28,8 @@ angular.module('starter').controller('MapController',
         if(!InstructionsService.instructions.newLocations.seen) {
 
           var instructionsPopup = $ionicPopup.alert({
-            title: 'Add Locations',
+            title: 'Find Me!!!',
+            cssClass: 'front-screen',
             template: InstructionsService.instructions.newLocations.text
           });
           instructionsPopup.then(function(res) {
@@ -40,7 +42,7 @@ angular.module('starter').controller('MapController',
           defaults: {
             tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
             maxZoom: 18,
-            zoomControlPosition: 'bottomleft'
+            zoomControlPosition: 'topright'
           },
           markers : {},
           events: {
@@ -54,6 +56,80 @@ angular.module('starter').controller('MapController',
         $scope.goTo(0);
 
       });
+
+      $scope.shake2 = function(){
+          alert('dfdfsf')
+      };
+
+      //CameraController
+      $scope.takePhoto = function() {
+        var options = {
+          quality: 75,
+          destinationType: Camera.DestinationType.DATA_URL,
+          sourceType: Camera.PictureSourceType.CAMERA,
+          allowEdit: true,
+          encodingType: Camera.EncodingType.JPEG,
+          targetWidth: 300,
+          targetHeight: 300,
+          popoverOptions: CameraPopoverOptions,
+          saveToPhotoAlbum: false
+        };
+
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+          $scope.imgURI = "data:image/jpeg;base64," + imageData;
+        }, function(err) {
+          // An error occured. Show a message to the user
+          alert(err + 'The camara is not working');
+        });
+      }
+
+      $scope.choosePhoto = function() {
+        var options = {
+          quality: 75,
+          destinationType: Camera.DestinationType.DATA_URL,
+          sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+          allowEdit: true,
+          encodingType: Camera.EncodingType.JPEG,
+          targetWidth: 300,
+          targetHeight: 300,
+          popoverOptions: CameraPopoverOptions,
+          saveToPhotoAlbum: false
+        };
+
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+          $scope.imgURI = "data:image/jpeg;base64," + imageData;
+        }, function(err) {
+          // An error occured. Show a message to the user
+          alert(err + 'Error in the storage devices');
+
+        });
+      }
+
+      //CameraController
+
+      $scope.cancel = function(){
+        var instructionsPopup = $ionicPopup.alert({
+          title: 'Find Me!!!',
+          cssClass: 'front-screen',
+          template: InstructionsService.instructions.newLocations.text
+        });
+        $scope.map = {
+          defaults: {
+            tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+            maxZoom: 18,
+            zoomControlPosition: 'topright'
+          },
+          markers : {},
+          events: {
+            map: {
+              enable: ['context'],
+              logic: 'emit'
+            }
+          }
+        };
+
+        $scope.goTo(0);
+      }
 
       var Location = function() {
         if ( !(this instanceof Location) ) return new Location();
@@ -78,6 +154,22 @@ angular.module('starter').controller('MapController',
         $scope.newLocation.lng = locationEvent.leafletEvent.latlng.lng;
         $scope.modal.show();
       });
+
+      $scope.loadForm = function(){
+        $cordovaGeolocation
+          .getCurrentPosition()
+          .then(function (position) {
+            $scope.locate();
+            $scope.newLocation = new Location();
+            $scope.newLocation.lat = position.coords.latitude;
+            $scope.newLocation.lng = position.coords.longitude;
+          }, function(err) {
+            // error
+            console.log("Location error!");
+            console.log(err);
+          });
+        $scope.modal.show();
+      }
 
       $scope.saveLocation = function() {
         LocationsService.savedLocations.push($scope.newLocation);
@@ -119,7 +211,7 @@ angular.module('starter').controller('MapController',
           .then(function (position) {
             $scope.map.center.lat  = position.coords.latitude;
             $scope.map.center.lng = position.coords.longitude;
-            $scope.map.center.zoom = 15;
+            $scope.map.center.zoom = 18;
 
             $scope.map.markers.now = {
               lat:position.coords.latitude,
