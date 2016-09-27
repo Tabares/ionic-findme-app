@@ -7,6 +7,7 @@ angular.module('starter').controller('MapController',
     'LocationsService',
     'InstructionsService',
     '$cordovaCamera',
+    '$cordovaCapture',
     function(
       $scope,
       $cordovaGeolocation,
@@ -15,7 +16,8 @@ angular.module('starter').controller('MapController',
       $ionicPopup,
       LocationsService,
       InstructionsService,
-      $cordovaCamera
+      $cordovaCamera,
+      $cordovaCapture
       ) {
       /**
        * Once state loaded, get put map on scope.
@@ -60,50 +62,87 @@ angular.module('starter').controller('MapController',
       $scope.shake2 = function(){
           alert('dfdfsf')
       };
+      //shake
+      var onShake = function () {
+        // Fired when a shake is detected
+        alert('Shaked phone');
+      };
+
+      var onError = function () {
+        // Fired when there is an accelerometer error (optional)
+        alert('accelerometer error');
+      };
 
       //CameraController
       $scope.takePhoto = function() {
         var options = {
-          quality: 75,
+          quality: 100,
           destinationType: Camera.DestinationType.DATA_URL,
           sourceType: Camera.PictureSourceType.CAMERA,
-          allowEdit: true,
+          allowEdit: false,
           encodingType: Camera.EncodingType.JPEG,
           targetWidth: 300,
           targetHeight: 300,
           popoverOptions: CameraPopoverOptions,
-          saveToPhotoAlbum: false
+          saveToPhotoAlbum: true,
+          correctOrientation: false
         };
 
         $cordovaCamera.getPicture(options).then(function(imageData) {
           $scope.imgURI = "data:image/jpeg;base64," + imageData;
         }, function(err) {
           // An error occured. Show a message to the user
-          alert(err + 'The camara is not working');
         });
       }
 
       $scope.choosePhoto = function() {
         var options = {
-          quality: 75,
-          destinationType: Camera.DestinationType.DATA_URL,
-          sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-          allowEdit: true,
-          encodingType: Camera.EncodingType.JPEG,
-          targetWidth: 300,
-          targetHeight: 300,
-          popoverOptions: CameraPopoverOptions,
-          saveToPhotoAlbum: false
+          destinationType: Camera.DestinationType.FILE_URI,
+          sourceType: Camera.PictureSourceType.CAMERA,
         };
 
-        $cordovaCamera.getPicture(options).then(function(imageData) {
-          $scope.imgURI = "data:image/jpeg;base64," + imageData;
+        $cordovaCamera.getPicture(options).then(function(imageURI) {
+          var image = document.getElementById('myImage');
+          image.src = imageURI;
+          $scope.imgURI = imageURI;
         }, function(err) {
-          // An error occured. Show a message to the user
-          alert(err + 'Error in the storage devices');
-
+        // error
         });
+
       }
+
+      $scope.captureAudio = function() {
+      var options = { limit: 3, duration: 10 };
+
+      $cordovaCapture.captureAudio(options).then(function(audioData) {
+        // Success! Audio data is here
+        alert(JSON.stringify(audioData))
+      }, function(err) {
+        // An error occurred. Show a message to the user
+      });
+    }
+
+    $scope.captureImage = function() {
+      var options = { limit: 3 };
+
+      $cordovaCapture.captureImage(options).then(function(imageData) {
+        // Success! Image data is here
+        alert(JSON.stringify(imageData))
+      }, function(err) {
+        // An error occurred. Show a message to the user
+      });
+    }
+
+    $scope.captureVideo = function() {
+      var options = { limit: 3, duration: 15 };
+
+      $cordovaCapture.captureVideo(options).then(function(videoData) {
+        // Success! Video data is here
+        alert(JSON.stringify(videoData))
+      }, function(err) {
+        // An error occurred. Show a message to the user
+      });
+    }
 
       //CameraController
 
