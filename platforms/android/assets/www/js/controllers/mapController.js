@@ -7,6 +7,7 @@ angular.module('starter').controller('MapController', ['$scope',
   'InstructionsService',
   '$cordovaCamera',
   '$cordovaCapture',
+  '$timeout',
   function(
     $scope,
     $cordovaGeolocation,
@@ -16,7 +17,8 @@ angular.module('starter').controller('MapController', ['$scope',
     LocationsService,
     InstructionsService,
     $cordovaCamera,
-    $cordovaCapture
+    $cordovaCapture,
+    $timeout
   ) {
     /**
      * Once state loaded, get put map on scope.
@@ -63,7 +65,7 @@ angular.module('starter').controller('MapController', ['$scope',
     };
 
 
-  
+
 
 
     //CameraController
@@ -245,7 +247,7 @@ angular.module('starter').controller('MapController', ['$scope',
      * Center map on user's current position
      */
     $scope.locate = function() {
-
+      
       $cordovaGeolocation
         .getCurrentPosition()
         .then(function(position) {

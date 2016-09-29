@@ -5,24 +5,22 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'leaflet-directive', 'ngCordova', 'igTruncate'])
 
-  .run(function($ionicPlatform) {
+  .run(function($ionicPlatform, $timeout) {
     $ionicPlatform.ready(function() {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
       var onShake = function() {
-        alert("device is being shaken");
+        //alert("device is being shaken");
         //$scope.locate();
+        $timeout(function() {
+             var el = document.getElementById('location');
+             angular.element(el).triggerHandler('click');
+         }, 0);
       };
       var onError = function() {
         // Fired when there is an accelerometer error (optional)
           alert("Error on device");
       };
-
-      // Start watching for shake gestures and call "onShake"
-      // with a shake sensitivity of 40 (optional, default 30)
-      shake.startWatch(onShake, 40 /*, onError */ );
-      // Stop watching for shake gestures
-      //shake.stopWatch();
       if(window.cordova && window.cordova.plugins.Keyboard) {
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         window.cordova.plugins.Keyboard.disableScroll(true);
@@ -30,6 +28,11 @@ angular.module('starter', ['ionic', 'leaflet-directive', 'ngCordova', 'igTruncat
       if(window.StatusBar) {
         StatusBar.styleDefault();
       }
+      // Start watching for shake gestures and call "onShake"
+      // with a shake sensitivity of 40 (optional, default 30)
+      shake.startWatch(onShake, 40 /*, onError */ );
+      // Stop watching for shake gestures
+      //shake.stopWatch();
     });
   })
 
