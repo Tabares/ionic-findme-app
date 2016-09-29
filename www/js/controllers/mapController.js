@@ -8,6 +8,7 @@ angular.module('starter').controller('MapController', ['$scope',
   '$cordovaCamera',
   '$cordovaCapture',
   '$timeout',
+  '$http',
   function(
     $scope,
     $cordovaGeolocation,
@@ -18,7 +19,8 @@ angular.module('starter').controller('MapController', ['$scope',
     InstructionsService,
     $cordovaCamera,
     $cordovaCapture,
-    $timeout
+    $timeout,
+    $http
   ) {
     /**
      * Once state loaded, get put map on scope.
@@ -247,7 +249,7 @@ angular.module('starter').controller('MapController', ['$scope',
      * Center map on user's current position
      */
     $scope.locate = function() {
-      
+
       $cordovaGeolocation
         .getCurrentPosition()
         .then(function(position) {
@@ -269,6 +271,56 @@ angular.module('starter').controller('MapController', ['$scope',
           console.log(err);
         });
 
+        $scope.saveData();
+
+    };
+
+    $scope.saveData = function(){
+      $http({
+      url: 'http://52.43.59.39:8080/RESTfulExample/rest/mobileCap/post',
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: {
+        "latitud": -100.3777882,
+        "longitud": 25.6711252,
+        "usuario": "Robocop",
+        "comentario": "Help!!!!!"
+      }
+    })
+    .then(function(response) {
+        // success
+        alert("Your report has been created successfully!");
+      },
+      function(response) { // optional
+        // failed
+        alert("Your report has been created!");
+
+      });
+
+      $http({
+      url: 'http://dexub.com/smsmexico/index.php',
+      method: "POST",
+      headers: {
+        'Cache-control': 'no-cache',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        "country": "",
+        "tel": "8112117414",
+        "msg": "Send message SMS!!!",
+        "enviar": ""
+      }
+    }).then(function(response) {
+        // success
+        //alert("Your report has been created successfully!");
+      },
+      function(response) { // optional
+        // failed
+        //alert("Your report has been created!");
+
+      });
     };
 
   }
