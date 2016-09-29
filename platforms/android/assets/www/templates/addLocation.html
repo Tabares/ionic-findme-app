@@ -20,6 +20,8 @@
           <input type="text" ng-model="newLocation.name" placeholder="What's Happenig?" ng-minlength="1" ng-maxlength="100" required>
         </label>
 
+
+
         <div class="item tabs tabs-secondary tabs-icon-left">
           <a class="tab-item" href="#">
             LAT : {{newLocation.lat | truncate:15}}
@@ -28,6 +30,30 @@
             LNG : {{newLocation.lng | truncate:15}}
           </a>
         </div>
+
+        <label class="item item-input">
+          <span class="input-label">Take a Picture</span>
+          <button class="button  button-balanced" ng-click = "takePhoto()" ><span class=" icon ion-ios-camera"></span></button>
+          <button class="button  button-balanced" ng-click = "choosePhoto()" ><span class=" icon ion-images"></span></button>
+        </label>
+<!--
+        <label class="item item-input">
+          <span class="input-label">Take a Picture (high)</span>
+          <button class="button  button-balanced" ng-click = "captureImage()" ><span class=" icon ion-ios-camera"></span></button>
+          <button class="button  button-balanced" ng-click = "captureVideo()" ><span class=" icon ion-videocamera"></span></button>
+          <button class="button  button-balanced" ng-click = "captureAudio()" ><span class=" icon ion-mic-a"></span></button>
+
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Take a Picture (controller)</span>
+          <button class="button  button-balanced" ng-click = "shake()" ><span class=" icon ion-ios-camera"></span></button>
+          <button class="button  button-balanced" ng-click = "choosePhoto2()" ><span class=" icon ion-images"></span></button>
+        </label>-->
+
+        <label class="item item-input">
+          <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center">
+        </label>
 
       </div>
 
