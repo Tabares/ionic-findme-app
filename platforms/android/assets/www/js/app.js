@@ -10,7 +10,7 @@ angular.module('starter', ['ionic', 'leaflet-directive', 'ngCordova', 'igTruncat
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
       var onShake = function() {
-        alert("device is being shaken");
+        //alert("device is being shaken");
         //$scope.locate();
         $timeout(function() {
              var el = document.getElementById('location');

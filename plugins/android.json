@@ -36,6 +36,15 @@
         },
         "cordova-plugin-shake": {
             "PACKAGE_NAME": "com.ionicframework.mymapdemo330562"
+        },
+        "cordova-plugin-tts": {
+            "PACKAGE_NAME": "com.ionicframework.mymapdemo330562"
+        },
+        "org.apache.cordova.speech.speechrecognition": {
+            "PACKAGE_NAME": "com.ionicframework.mymapdemo330562"
+        },
+        "cordova-plugin-brightness": {
+            "PACKAGE_NAME": "com.ionicframework.mymapdemo330562"
         }
     },
     "dependent_plugins": {

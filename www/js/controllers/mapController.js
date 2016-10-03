@@ -169,7 +169,7 @@ angular.module('starter').controller('MapController', ['$scope',
           }
         }
       };
-
+      $scope.newLocation.name ='';
       $scope.goTo(0);
     }
 
@@ -247,7 +247,7 @@ angular.module('starter').controller('MapController', ['$scope',
      * Center map on user's current position
      */
     $scope.locate = function() {
-      
+
       $cordovaGeolocation
         .getCurrentPosition()
         .then(function(position) {
@@ -269,6 +269,35 @@ angular.module('starter').controller('MapController', ['$scope',
           console.log(err);
         });
 
+    };
+
+    //speech
+    $scope.data = {
+      speechText: ''
+    };
+    $scope.recognizedText = '';
+
+    $scope.speakText = function() {
+      TTS.speak({
+        text: $scope.data.speechText,
+        locale: 'en-GB',
+        rate: 1.5
+      }, function() {
+        // Do Something after success
+      }, function(reason) {
+        // Handle the error case
+      });
+    };
+
+    $scope.record = function() {
+      var recognition = new SpeechRecognition();
+      recognition.onresult = function(event) {
+        if (event.results.length > 0) {
+          $scope.newLocation.name = event.results[0][0].transcript;
+          $scope.$apply();
+        }
+      };
+      recognition.start();
     };
 
   }
