@@ -343,6 +343,86 @@ module.exports = [
         "clobbers": [
             "shake"
         ]
+    },
+    {
+        "id": "cordova-plugin-tts.tts",
+        "file": "plugins/cordova-plugin-tts/www/tts.js",
+        "pluginId": "cordova-plugin-tts",
+        "clobbers": [
+            "TTS"
+        ]
+    },
+    {
+        "id": "org.apache.cordova.speech.speechrecognition.SpeechRecognition",
+        "file": "plugins/org.apache.cordova.speech.speechrecognition/www/SpeechRecognition.js",
+        "pluginId": "org.apache.cordova.speech.speechrecognition",
+        "clobbers": [
+            "SpeechRecognition"
+        ]
+    },
+    {
+        "id": "org.apache.cordova.speech.speechrecognition.SpeechRecognitionError",
+        "file": "plugins/org.apache.cordova.speech.speechrecognition/www/SpeechRecognitionError.js",
+        "pluginId": "org.apache.cordova.speech.speechrecognition",
+        "clobbers": [
+            "SpeechRecognitionError"
+        ]
+    },
+    {
+        "id": "org.apache.cordova.speech.speechrecognition.SpeechRecognitionAlternative",
+        "file": "plugins/org.apache.cordova.speech.speechrecognition/www/SpeechRecognitionAlternative.js",
+        "pluginId": "org.apache.cordova.speech.speechrecognition",
+        "clobbers": [
+            "SpeechRecognitionAlternative"
+        ]
+    },
+    {
+        "id": "org.apache.cordova.speech.speechrecognition.SpeechRecognitionResult",
+        "file": "plugins/org.apache.cordova.speech.speechrecognition/www/SpeechRecognitionResult.js",
+        "pluginId": "org.apache.cordova.speech.speechrecognition",
+        "clobbers": [
+            "SpeechRecognitionResult"
+        ]
+    },
+    {
+        "id": "org.apache.cordova.speech.speechrecognition.SpeechRecognitionResultList",
+        "file": "plugins/org.apache.cordova.speech.speechrecognition/www/SpeechRecognitionResultList.js",
+        "pluginId": "org.apache.cordova.speech.speechrecognition",
+        "clobbers": [
+            "SpeechRecognitionResultList"
+        ]
+    },
+    {
+        "id": "org.apache.cordova.speech.speechrecognition.SpeechRecognitionEvent",
+        "file": "plugins/org.apache.cordova.speech.speechrecognition/www/SpeechRecognitionEvent.js",
+        "pluginId": "org.apache.cordova.speech.speechrecognition",
+        "clobbers": [
+            "SpeechRecognitionEvent"
+        ]
+    },
+    {
+        "id": "org.apache.cordova.speech.speechrecognition.SpeechGrammar",
+        "file": "plugins/org.apache.cordova.speech.speechrecognition/www/SpeechGrammar.js",
+        "pluginId": "org.apache.cordova.speech.speechrecognition",
+        "clobbers": [
+            "SpeechGrammar"
+        ]
+    },
+    {
+        "id": "org.apache.cordova.speech.speechrecognition.SpeechGrammarList",
+        "file": "plugins/org.apache.cordova.speech.speechrecognition/www/SpeechGrammarList.js",
+        "pluginId": "org.apache.cordova.speech.speechrecognition",
+        "clobbers": [
+            "SpeechGrammarList"
+        ]
+    },
+    {
+        "id": "cordova-plugin-brightness.Brightness",
+        "file": "plugins/cordova-plugin-brightness/www/brightness.js",
+        "pluginId": "cordova-plugin-brightness",
+        "clobbers": [
+            "cordova.plugins.brightness"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -360,7 +440,10 @@ module.exports.metadata =
     "cordova-plugin-file": "4.3.0",
     "cordova-plugin-media-capture": "1.4.0",
     "cordova-plugin-device-motion": "1.2.2",
-    "cordova-plugin-shake": "0.5.4"
+    "cordova-plugin-shake": "0.5.4",
+    "cordova-plugin-tts": "0.2.3",
+    "org.apache.cordova.speech.speechrecognition": "0.1.1",
+    "cordova-plugin-brightness": "0.1.5"
 };
 // BOTTOM OF METADATA
 });

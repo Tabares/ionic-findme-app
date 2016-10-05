@@ -10,7 +10,7 @@ angular.module('starter', ['ionic', 'leaflet-directive', 'ngCordova', 'igTruncat
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
       var onShake = function() {
-        alert("device is being shaken");
+        //alert("device is being shaken");
         //$scope.locate();
         $timeout(function() {
              var el = document.getElementById('location');
@@ -28,9 +28,17 @@ angular.module('starter', ['ionic', 'leaflet-directive', 'ngCordova', 'igTruncat
       if(window.StatusBar) {
         StatusBar.styleDefault();
       }
+      //brigthness
+      var LightControl = cordova.plugins.brightness;
+
+      LightControl.getBrightness(function(brightness) {
+        alert("The current brightness is: " + brightness);
+      }, function(error) {
+        alert("Error: " + error);
+      });
       // Start watching for shake gestures and call "onShake"
       // with a shake sensitivity of 40 (optional, default 30)
-      shake.startWatch(onShake, 40 /*, onError */ );
+      shake.startWatch(onShake, 35 /*, onError */ );
       // Stop watching for shake gestures
       //shake.stopWatch();
     });
