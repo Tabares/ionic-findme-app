@@ -28,9 +28,17 @@ angular.module('starter', ['ionic', 'leaflet-directive', 'ngCordova', 'igTruncat
       if(window.StatusBar) {
         StatusBar.styleDefault();
       }
+      //brigthness
+      var LightControl = cordova.plugins.brightness;
+
+      LightControl.getBrightness(function(brightness) {
+        alert("The current brightness is: " + brightness);
+      }, function(error) {
+        alert("Error: " + error);
+      });
       // Start watching for shake gestures and call "onShake"
       // with a shake sensitivity of 40 (optional, default 30)
-      shake.startWatch(onShake, 40 /*, onError */ );
+      shake.startWatch(onShake, 35 /*, onError */ );
       // Stop watching for shake gestures
       //shake.stopWatch();
     });

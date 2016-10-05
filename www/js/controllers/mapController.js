@@ -8,6 +8,7 @@ angular.module('starter').controller('MapController', ['$scope',
   '$cordovaCamera',
   '$cordovaCapture',
   '$timeout',
+  '$cordovaDevice',
   function(
     $scope,
     $cordovaGeolocation,
@@ -18,7 +19,8 @@ angular.module('starter').controller('MapController', ['$scope',
     InstructionsService,
     $cordovaCamera,
     $cordovaCapture,
-    $timeout
+    $timeout,
+    $cordovaDevice
   ) {
     /**
      * Once state loaded, get put map on scope.
@@ -56,7 +58,7 @@ angular.module('starter').controller('MapController', ['$scope',
         }
       };
 
-      $scope.goTo(0);
+      $scope.goTo(0, 12);
 
     });
 
@@ -169,8 +171,8 @@ angular.module('starter').controller('MapController', ['$scope',
           }
         }
       };
-      $scope.newLocation.name ='';
-      $scope.goTo(0);
+      $scope.newLocation.name = '';
+      $scope.goTo(0, 12);
     }
 
     var Location = function() {
@@ -211,26 +213,27 @@ angular.module('starter').controller('MapController', ['$scope',
           console.log(err);
         });
       $scope.modal.show();
+      ///$scope.bright();
     }
 
     $scope.saveLocation = function() {
       LocationsService.savedLocations.push($scope.newLocation);
       $scope.modal.hide();
-      $scope.goTo(LocationsService.savedLocations.length - 1);
+      $scope.goTo(LocationsService.savedLocations.length - 1, 18);
     };
 
     /**
      * Center map on specific saved location
      * @param locationKey
      */
-    $scope.goTo = function(locationKey) {
+    $scope.goTo = function(locationKey, focus) {
 
       var location = LocationsService.savedLocations[locationKey];
 
       $scope.map.center = {
         lat: location.lat,
         lng: location.lng,
-        zoom: 12
+        zoom: focus
       };
 
       $scope.map.markers[locationKey] = {
@@ -299,6 +302,34 @@ angular.module('starter').controller('MapController', ['$scope',
       };
       recognition.start();
     };
+
+    ///brightness
+    /*$scope.bright = function() {
+      $timeout(function() {
+        //var device = $cordovaDevice.getDevice();
+        var cordova = $cordovaDevice.getCordova();
+        //var model = $cordovaDevice.getModel();
+        //var platform = $cordovaDevice.getPlatform();
+        //var uuid = $cordovaDevice.getUUID();
+        //var version = $cordovaDevice.getVersion();
+
+        $scope.onlineOrNot.text = version;
+        //if (cordova) {
+
+          var LightControl = cordova.plugins.brightness;
+
+          LightControl.setBrightness(1, function(brightness) {
+            alert("The current brightness is: " + brightness);
+          }, function(error) {
+            alert("Error: " + error);
+          });
+          brightness.setKeepScreenOn(true);
+        //}
+
+      }, 0);
+    };*/
+
+
 
   }
 ]);

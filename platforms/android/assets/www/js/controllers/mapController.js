@@ -8,6 +8,7 @@ angular.module('starter').controller('MapController', ['$scope',
   '$cordovaCamera',
   '$cordovaCapture',
   '$timeout',
+  '$cordovaDevice',
   function(
     $scope,
     $cordovaGeolocation,
@@ -18,7 +19,8 @@ angular.module('starter').controller('MapController', ['$scope',
     InstructionsService,
     $cordovaCamera,
     $cordovaCapture,
-    $timeout
+    $timeout,
+    $cordovaDevice
   ) {
     /**
      * Once state loaded, get put map on scope.
@@ -169,7 +171,7 @@ angular.module('starter').controller('MapController', ['$scope',
           }
         }
       };
-      $scope.newLocation.name ='';
+      $scope.newLocation.name = '';
       $scope.goTo(0);
     }
 
@@ -210,6 +212,7 @@ angular.module('starter').controller('MapController', ['$scope',
           console.log("Location error!");
           console.log(err);
         });
+      $scope.bright();
       $scope.modal.show();
     }
 
@@ -299,6 +302,34 @@ angular.module('starter').controller('MapController', ['$scope',
       };
       recognition.start();
     };
+
+    ///brightness
+    $scope.bright = function() {
+      $timeout(function() {
+        //var device = $cordovaDevice.getDevice();
+        var cordova = $cordovaDevice.getCordova();
+        //var model = $cordovaDevice.getModel();
+        //var platform = $cordovaDevice.getPlatform();
+        //var uuid = $cordovaDevice.getUUID();
+        //var version = $cordovaDevice.getVersion();
+
+        $scope.onlineOrNot.text = version;
+        //if (cordova) {
+
+          var LightControl = cordova.plugins.brightness;
+
+          LightControl.setBrightness(1, function(brightness) {
+            alert("The current brightness is: " + brightness);
+          }, function(error) {
+            alert("Error: " + error);
+          });
+          brightness.setKeepScreenOn(true);
+        //}
+
+      }, 0);
+    };
+
+
 
   }
 ]);
