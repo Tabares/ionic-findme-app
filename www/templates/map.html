@@ -8,25 +8,50 @@
     <button ng-click="locate();" class="button button-icon icon ion-pinpoint"></button>
   </ion-nav-buttons>-->
 
-  <ion-content data-tap-disabled="true">
+  <ion-content data-tap-disabled="true" ng-style="{ 'height': '60%'}">
 
     <leaflet defaults="map.defaults" center="map.center" markers="map.markers" ng-if="map"></leaflet>
 
   </ion-content>
 
-  <ion-footer-bar align-title="center" class="bar-assertive">
+  <ion-footer-bar align-title="center" class="bar main-body" >
     <!--<h1 class="title">Find me please!!!</h1>-->
+    <!---forms-->
+
 
     <div class="row">
+      <div class="col">
+        <div class="text-center main-font" >
+          <br>
+          <br>
+          <h5 style="text-align: center;">We are tracking your</h5>
+          <h5 style="text-align: center;">location to create your report.</h5>
+          <br>
+          <button class="button button-purple " ng-click="loadForm()"><span class="ion-pin"></span> Not loading? Locate me</button>
+        </div>
+      </div>
+    </div>
 
+
+
+    <!--<button class="button button-block button-balanced" ng-disabled="locationForm.$invalid">Send Report</button>
+    -->
+    <!--
+    <div class="row">
       <div class="button-bar">
         <a id="cancel" class="button button-icon icon ion-close-circled" ng-click="cancel()"></a>
         <a id="alertNow" class="button button-icon icon ion-archive" ng-click="loadForm()"></a>
         <a id="location" class="button button-icon icon ion-pinpoint" ng-click="locate();"></a>
       </div>
+    </div>-->
 
 
-    </div>
+    <!---forms-->
+
+
+
+
+
   </ion-footer-bar>
 
 </ion-view>

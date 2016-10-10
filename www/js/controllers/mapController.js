@@ -78,8 +78,8 @@ angular.module('starter').controller('MapController', ['$scope',
         sourceType: Camera.PictureSourceType.CAMERA,
         allowEdit: false,
         encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 300,
-        targetHeight: 300,
+        targetWidth: 100,
+        targetHeight: 100,
         popoverOptions: CameraPopoverOptions,
         saveToPhotoAlbum: true,
         correctOrientation: false
@@ -217,8 +217,9 @@ angular.module('starter').controller('MapController', ['$scope',
     }
 
     $scope.saveLocation = function() {
+      alert('You alert detail has been sent, please wait!!!');
       LocationsService.savedLocations.push($scope.newLocation);
-      $scope.modal.hide();
+      //$scope.modal.hide();
       $scope.goTo(LocationsService.savedLocations.length - 1, 18);
     };
 
@@ -271,6 +272,7 @@ angular.module('starter').controller('MapController', ['$scope',
           console.log("Location error!");
           console.log(err);
         });
+        alert('You alert detail has been sent!!!');
 
     };
 

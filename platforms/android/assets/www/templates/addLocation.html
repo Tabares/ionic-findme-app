@@ -1,17 +1,23 @@
 <ion-modal-view>
-  <ion-header-bar class="bar-calm">
 
-    <h1 class="title">Detail Your Point</h1>
-
-    <div class="buttons">
-      <button class="button button-clear" ng-click="modal.hide()">Cancel</button>
-    </div>
-
-  </ion-header-bar>
 
   <ion-content class="padding">
 
     <form name="locationForm" ng-submit="saveLocation()">
+
+      <div class="row">
+        <div class="col">
+          <div class="text-center main-font" >
+            <br>
+            <textarea type="text" class="input-text" ng-model="newLocation.name" placeholder="What's Happenig?" ng-minlength="1" ng-maxlength="200" required />
+            <button class="button button-block button-gray" ng-click = "record()"><span class="icon ion-mic-a micro"></span></button>
+
+            <button class="button button-block button-white" ng-click = "takePhoto()"><span class="icon ion-ios-camera"></span> Attach a photograph</button>
+            <button class="button button-block button-purple" ng-disabled="locationForm.$invalid">Send Report</button>
+
+          </div>
+        </div>
+      </div>
 
       <div class="list">
 
@@ -32,14 +38,14 @@
         </label>
 
 
-        <div class="item tabs tabs-secondary tabs-icon-left">
+    <!--    <div class="item tabs tabs-secondary tabs-icon-left">
           <a class="tab-item" href="#">
             LAT : {{newLocation.lat | truncate:15}}
           </a>
           <a class="tab-item" href="#">
             LNG : {{newLocation.lng | truncate:15}}
           </a>
-        </div>
+        </div>-->
 
         <label class="item item-input">
           <span class="input-label">Take a Picture</span>
@@ -76,5 +82,15 @@
     </form>
 
   </ion-content>
+
+<!--  <ion-header-bar class="bar-calm">
+
+    <h1 class="title">Detail Your Point</h1>
+
+    <div class="buttons">
+      <button class="button button-clear" ng-click="modal.hide()">Cancel</button>
+    </div>
+
+  </ion-header-bar>-->
 
 </ion-modal-view>

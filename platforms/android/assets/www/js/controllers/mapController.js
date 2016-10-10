@@ -58,7 +58,7 @@ angular.module('starter').controller('MapController', ['$scope',
         }
       };
 
-      $scope.goTo(0);
+      $scope.goTo(0, 12);
 
     });
 
@@ -78,8 +78,8 @@ angular.module('starter').controller('MapController', ['$scope',
         sourceType: Camera.PictureSourceType.CAMERA,
         allowEdit: false,
         encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 300,
-        targetHeight: 300,
+        targetWidth: 100,
+        targetHeight: 100,
         popoverOptions: CameraPopoverOptions,
         saveToPhotoAlbum: true,
         correctOrientation: false
@@ -172,7 +172,7 @@ angular.module('starter').controller('MapController', ['$scope',
         }
       };
       $scope.newLocation.name = '';
-      $scope.goTo(0);
+      $scope.goTo(0, 12);
     }
 
     var Location = function() {
@@ -212,28 +212,29 @@ angular.module('starter').controller('MapController', ['$scope',
           console.log("Location error!");
           console.log(err);
         });
-      $scope.bright();
       $scope.modal.show();
+      ///$scope.bright();
     }
 
     $scope.saveLocation = function() {
+      alert('You alert detail has been sent, please wait!!!');
       LocationsService.savedLocations.push($scope.newLocation);
-      $scope.modal.hide();
-      $scope.goTo(LocationsService.savedLocations.length - 1);
+      //$scope.modal.hide();
+      $scope.goTo(LocationsService.savedLocations.length - 1, 18);
     };
 
     /**
      * Center map on specific saved location
      * @param locationKey
      */
-    $scope.goTo = function(locationKey) {
+    $scope.goTo = function(locationKey, focus) {
 
       var location = LocationsService.savedLocations[locationKey];
 
       $scope.map.center = {
         lat: location.lat,
         lng: location.lng,
-        zoom: 12
+        zoom: focus
       };
 
       $scope.map.markers[locationKey] = {
@@ -271,6 +272,7 @@ angular.module('starter').controller('MapController', ['$scope',
           console.log("Location error!");
           console.log(err);
         });
+        alert('You alert detail has been sent!!!');
 
     };
 
@@ -304,7 +306,7 @@ angular.module('starter').controller('MapController', ['$scope',
     };
 
     ///brightness
-    $scope.bright = function() {
+    /*$scope.bright = function() {
       $timeout(function() {
         //var device = $cordovaDevice.getDevice();
         var cordova = $cordovaDevice.getCordova();
@@ -327,7 +329,7 @@ angular.module('starter').controller('MapController', ['$scope',
         //}
 
       }, 0);
-    };
+    };*/
 
 
 

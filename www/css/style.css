@@ -3,6 +3,66 @@ body {
   min-height: 100%;
 }
 
+.modal {
+  bottom: 0;
+  min-height: initial;
+  top: initial;
+  height: 60%;
+  /*border-width: 1px;
+  border-style: solid;*/
+}
+
+.main-font h5{
+  color: white;
+  text-align: center;
+}
+
+.button-purple{
+  background-color: #984ec2 !important;
+  border-color: white !important;
+  color: white !important;
+  width: 100%;
+
+}
+
+.button-white{
+  background-color: white !important;
+  border-color: #984ec2  !important;
+  color: #984ec2  !important;
+  width: 100%;
+
+}
+.button-gray{
+  background-color: #f2f2f2 !important;
+  border-color: #f2f2f2  !important;
+  color: #984ec2  !important;
+  width: 100%;
+  margin-top: -10px !important;
+  text-align: right !important;
+}
+
+.ion-ios-camera{
+  float: left !important;
+}
+
+.micro{
+  color: rgb(200, 200, 200);
+  font-size: 10px !important;
+}
+.input-text{
+  background-color: #f2f2f2;
+  width: 100%;
+  height: 120px;
+}
+
+.main-body{
+  border-color: #984ec2 !important;
+  background-color: #984ec2 !important;
+  background-image: linear-gradient(180deg, #984ec2, ##984ec2 50%, transparent 50%) !important;
+  height: 50%;
+  color: white !important;
+}
+
 .scroll, .angular-leaflet-map {
   height: 100%;
 }
