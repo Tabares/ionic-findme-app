@@ -43,6 +43,18 @@ angular.module('starter').controller('MapController', ['$scope',
 
       }
 
+      //var greenIcon = new LeafIcon({iconUrl: 'http://www.clipartbest.com/cliparts/RiA/A5L/RiAA5LkBT.png'});
+      var greenIcon = L.icon({
+        iconUrl: 'http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/map-marker-icon.png',
+        //shadowUrl: 'leaf-shadow.png',
+        iconSize: [38, 95], // size of the icon
+        //shadowSize: [50, 64], // size of the shadow
+        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+        //shadowAnchor: [4, 62], // the same for the shadow
+        popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+      });
+
+
       $scope.map = {
         defaults: {
           tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
@@ -50,6 +62,16 @@ angular.module('starter').controller('MapController', ['$scope',
           zoomControlPosition: 'topright'
         },
         markers: {},
+        defaultIcon: {
+          iconUrl: 'img/leaf-green.png',
+          shadowUrl: 'img/leaf-shadow.png',
+          iconSize: [38, 95], // size of the icon
+          shadowSize: [50, 64], // size of the shadow
+          iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+          shadowAnchor: [4, 62], // the same for the shadow
+          popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+
+        },
         events: {
           map: {
             enable: ['context'],
@@ -57,123 +79,14 @@ angular.module('starter').controller('MapController', ['$scope',
           }
         }
       };
+
+
 
       $scope.goTo(0, 12);
 
     });
 
-    $scope.shake2 = function() {
-      alert('dfdfsf')
-    };
-
-
-
-
-
-    //CameraController
-    $scope.takePhoto = function() {
-      var options = {
-        quality: 100,
-        destinationType: Camera.DestinationType.DATA_URL,
-        sourceType: Camera.PictureSourceType.CAMERA,
-        allowEdit: false,
-        encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 100,
-        targetHeight: 100,
-        popoverOptions: CameraPopoverOptions,
-        saveToPhotoAlbum: true,
-        correctOrientation: false
-      };
-
-      $cordovaCamera.getPicture(options).then(function(imageData) {
-        $scope.imgURI = "data:image/jpeg;base64," + imageData;
-      }, function(err) {
-        // An error occured. Show a message to the user
-      });
-    }
-
-    $scope.choosePhoto = function() {
-      var options = {
-        destinationType: Camera.DestinationType.FILE_URI,
-        sourceType: Camera.PictureSourceType.CAMERA,
-      };
-
-      $cordovaCamera.getPicture(options).then(function(imageURI) {
-        var image = document.getElementById('myImage');
-        image.src = imageURI;
-        $scope.imgURI = imageURI;
-      }, function(err) {
-        // error
-      });
-
-    }
-
-    $scope.captureAudio = function() {
-      var options = {
-        limit: 3,
-        duration: 10
-      };
-
-      $cordovaCapture.captureAudio(options).then(function(audioData) {
-        // Success! Audio data is here
-        alert(JSON.stringify(audioData))
-      }, function(err) {
-        // An error occurred. Show a message to the user
-      });
-    }
-
-    $scope.captureImage = function() {
-      var options = {
-        limit: 3
-      };
-
-      $cordovaCapture.captureImage(options).then(function(imageData) {
-        // Success! Image data is here
-        alert(JSON.stringify(imageData))
-      }, function(err) {
-        // An error occurred. Show a message to the user
-      });
-    }
-
-    $scope.captureVideo = function() {
-      var options = {
-        limit: 3,
-        duration: 15
-      };
-
-      $cordovaCapture.captureVideo(options).then(function(videoData) {
-        // Success! Video data is here
-        alert(JSON.stringify(videoData))
-      }, function(err) {
-        // An error occurred. Show a message to the user
-      });
-    }
-
-    //CameraController
-
-    $scope.cancel = function() {
-      var instructionsPopup = $ionicPopup.alert({
-        title: 'Find Me!!!',
-        cssClass: 'front-screen',
-        template: InstructionsService.instructions.newLocations.text
-      });
-      $scope.map = {
-        defaults: {
-          tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-          maxZoom: 18,
-          zoomControlPosition: 'topright'
-        },
-        markers: {},
-        events: {
-          map: {
-            enable: ['context'],
-            logic: 'emit'
-          }
-        }
-      };
-      $scope.newLocation.name = '';
-      $scope.goTo(0, 12);
-    }
+    $scope.shake2 = function() {};
 
     var Location = function() {
       if (!(this instanceof Location)) return new Location();
@@ -262,7 +175,7 @@ angular.module('starter').controller('MapController', ['$scope',
           $scope.map.markers.now = {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
-            message: "You Are Here",
+            message: "Incident Location",
             focus: true,
             draggable: false
           };
@@ -272,9 +185,135 @@ angular.module('starter').controller('MapController', ['$scope',
           console.log("Location error!");
           console.log(err);
         });
-        alert('You alert detail has been sent!!!');
+      alert('You alert detail has been sent!!!');
 
     };
+
+
+    //CameraController
+    $scope.photo = true;
+    $scope.valid = true;
+
+    $scope.sendReport = function() {
+      alert('You alert detail has been sent, please wait!!!');
+      LocationsService.savedLocations.push($scope.newLocation);
+      //$scope.modal.hide();
+      $scope.goTo(LocationsService.savedLocations.length - 1, 18);
+    }
+
+    $scope.removePhoto = function() {
+
+      $scope.photo = true;
+      $scope.imgURI = "";
+    }
+
+    $scope.takePhoto = function() {
+      $scope.photo = false;
+
+      var options = {
+        quality: 100,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.CAMERA,
+        allowEdit: false,
+        encodingType: Camera.EncodingType.JPEG,
+        targetWidth: 100,
+        targetHeight: 100,
+        popoverOptions: CameraPopoverOptions,
+        saveToPhotoAlbum: true,
+        correctOrientation: false
+      };
+
+      $cordovaCamera.getPicture(options).then(function(imageData) {
+        $scope.imgURI = "data:image/jpeg;base64," + imageData;
+      }, function(err) {
+        // An error occured. Show a message to the user
+      });
+
+    }
+
+    $scope.choosePhoto = function() {
+      var options = {
+        destinationType: Camera.DestinationType.FILE_URI,
+        sourceType: Camera.PictureSourceType.CAMERA,
+      };
+
+      $cordovaCamera.getPicture(options).then(function(imageURI) {
+        var image = document.getElementById('myImage');
+        image.src = imageURI;
+        $scope.imgURI = imageURI;
+      }, function(err) {
+        // error
+      });
+
+    }
+
+    $scope.captureAudio = function() {
+      var options = {
+        limit: 3,
+        duration: 10
+      };
+
+      $cordovaCapture.captureAudio(options).then(function(audioData) {
+        // Success! Audio data is here
+        alert(JSON.stringify(audioData))
+      }, function(err) {
+        // An error occurred. Show a message to the user
+      });
+    }
+
+    $scope.captureImage = function() {
+      var options = {
+        limit: 3
+      };
+
+      $cordovaCapture.captureImage(options).then(function(imageData) {
+        // Success! Image data is here
+        alert(JSON.stringify(imageData))
+      }, function(err) {
+        // An error occurred. Show a message to the user
+      });
+    }
+
+    $scope.captureVideo = function() {
+      var options = {
+        limit: 3,
+        duration: 15
+      };
+
+      $cordovaCapture.captureVideo(options).then(function(videoData) {
+        // Success! Video data is here
+        alert(JSON.stringify(videoData))
+      }, function(err) {
+        // An error occurred. Show a message to the user
+      });
+    }
+
+    //CameraController
+
+    $scope.cancel = function() {
+      var instructionsPopup = $ionicPopup.alert({
+        title: 'Find Me!!!',
+        cssClass: 'front-screen',
+        template: InstructionsService.instructions.newLocations.text
+      });
+      $scope.map = {
+        defaults: {
+          tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+          maxZoom: 18,
+          zoomControlPosition: 'topright'
+        },
+        markers: {},
+        events: {
+          map: {
+            enable: ['context'],
+            logic: 'emit'
+          }
+        }
+      };
+      $scope.newLocation.name = '';
+      $scope.goTo(0, 12);
+    }
+
 
     //speech
     $scope.data = {

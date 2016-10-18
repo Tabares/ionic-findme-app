@@ -17,6 +17,8 @@ body {
   text-align: center;
 }
 
+
+
 .button-purple{
   background-color: #984ec2 !important;
   border-color: white !important;
@@ -41,8 +43,29 @@ body {
   text-align: right !important;
 }
 
+.button-hide{
+  background-color: white !important;
+  border-color: white  !important;
+  color: #984ec2  !important;
+  width: 100%;
+  margin: 0 !important;
+  text-align: center !important;
+}
+
 .ion-ios-camera{
   float: left !important;
+}
+
+.ion-close{
+  float: left !important;
+}
+
+.ion-location{
+  float: left !important;
+}
+
+.photo-label{
+  padding: 2px !important;
 }
 
 .micro{
@@ -81,6 +104,8 @@ body {
 
 /*popup*/
 
+
+
 .front-screen{
   width: 100% !important;
   height: 100% !important;
@@ -108,3 +133,83 @@ body {
   height: 120px !important;
 }
 */
+
+/* Experiences */
+
+
+
+/* BORDERS AND BULLETS */
+
+p {
+    /*CSS reset*/
+    margin-bottom: 0;
+}
+
+ul.experiences li {
+    position:relative; /* so that pseudoelements are positioned relatively to their "li"s*/
+    /* use padding-bottom instead of margin-bottom.*/
+    margin-bottom: 0; /* This overrides previously specified margin-bottom */
+    padding-bottom: 2.5em;
+}
+
+ul.experiences li:after {
+    /* bullets */
+    content: url('http://upload.wikimedia.org/wikipedia/commons/thumb/3/30/RedDisc.svg/20px-RedDisc.svg.png');
+    position: absolute;
+    left: -26px; /*adjust manually*/
+    top: 0px;
+}
+
+ul.experiences li:before {
+    /* lines */
+    content:"";
+    position: absolute;
+    left: -16px; /* adjust manually */
+    border-left: 1px solid white;
+    height: 100%;
+    width: 1px;
+}
+
+ul.experiences li:first-child:before {
+   /* first li's line */
+   top: 6px; /* moves the line down so that it disappears under the bullet. Adjust manually */
+}
+
+ul.experiences li:last-child:before {
+    /* last li's line */
+   height: 6px; /* shorten the line so it goes only up to the bullet. Is equal to first-child:before's top */
+}
+
+
+@import url('//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css');
+
+.custom-bullet li {
+    display: block;
+}
+
+.custom-bullet li:before
+{
+    /*Using a Bootstrap glyphicon as the bullet point*/
+    content: "\e080";
+    font-family: 'Glyphicons Halflings';
+    font-size: 9px;
+    float: left;
+    margin-top: 4px;
+    margin-left: -17px;
+    color: #CCCCCC;
+}
+
+
+#list {
+  width: 80%;
+  margin: 30px auto;
+  font-size: 13px;
+}
+#list ul {
+  margin-top: 30px;
+}
+#list ul li {
+  text-align: left;
+  list-style: disc;
+  margin: 10px 0px;
+}

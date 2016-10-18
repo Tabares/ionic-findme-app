@@ -3,86 +3,27 @@
 
   <ion-content class="padding">
 
-    <form name="locationForm" ng-submit="saveLocation()">
-
+    <form name="myForm">
       <div class="row">
         <div class="col">
           <div class="text-center main-font" >
-            <br>
             <textarea type="text" class="input-text" ng-model="newLocation.name" placeholder="What's Happenig?" ng-minlength="1" ng-maxlength="200" required />
             <button class="button button-block button-gray" ng-click = "record()"><span class="icon ion-mic-a micro"></span></button>
+            <button class="button button-block button-white" ng-click = "takePhoto()" ng-hide="!photo"><span class="icon ion-ios-camera" ></span> Attach a photograph</button>
+            <label class="item item-input photo-label" ng-hide="photo" >
+              <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center; width: 75px">
+              <button class="button button-block button-hide" ng-click="removePhoto()"><span class="icon ion-close"></span> Delete photo</button>
+            </label>
+            <button class="button button-block button-purple" ng-click = "sendReport()" ng-disabled="myForm.$invalid">Send Report</button>
 
-            <button class="button button-block button-white" ng-click = "takePhoto()"><span class="icon ion-ios-camera"></span> Attach a photograph</button>
-            <button class="button button-block button-purple" ng-disabled="locationForm.$invalid">Send Report</button>
-
+            <!--<button class="button button-block button-purple" ng-disabled="locationForm.$invalid" >Send Report</button>-->
           </div>
         </div>
-      </div>
-
-      <div class="list">
-
-        <label class="item item-input">
-          <span class="input-label">Place Reference</span>
-          <input type="text" ng-model="newLocation.name" placeholder="What's Happenig?" ng-minlength="1" ng-maxlength="100" required >
-        </label>
-
-        <label class="item item-input">
-          <button class="button button-balanced" ng-click="record()">
-              <span class=" icon ion-mic-a">
-          </button>
-         <div class="card">
-           <div class="item item-text-wrap">
-             {{recognizedText}}
-           </div>
-         </div>
-        </label>
-
-
-    <!--    <div class="item tabs tabs-secondary tabs-icon-left">
-          <a class="tab-item" href="#">
-            LAT : {{newLocation.lat | truncate:15}}
-          </a>
-          <a class="tab-item" href="#">
-            LNG : {{newLocation.lng | truncate:15}}
-          </a>
-        </div>-->
-
-        <label class="item item-input">
-          <span class="input-label">Take a Picture</span>
-          <button class="button  button-balanced" ng-click = "takePhoto()" ><span class=" icon ion-ios-camera"></span></button>
-          <button class="button  button-balanced" ng-click = "choosePhoto()" ><span class=" icon ion-images"></span></button>
-        </label>
-<!--
-        <label class="item item-input">
-          <span class="input-label">Take a Picture (high)</span>
-          <button class="button  button-balanced" ng-click = "captureImage()" ><span class=" icon ion-ios-camera"></span></button>
-          <button class="button  button-balanced" ng-click = "captureVideo()" ><span class=" icon ion-videocamera"></span></button>
-          <button class="button  button-balanced" ng-click = "captureAudio()" ><span class=" icon ion-mic-a"></span></button>
-
-        </label>
-
-        <label class="item item-input">
-          <span class="input-label">Take a Picture (controller)</span>
-          <button class="button  button-balanced" ng-click = "shake()" ><span class=" icon ion-ios-camera"></span></button>
-          <button class="button  button-balanced" ng-click = "choosePhoto2()" ><span class=" icon ion-images"></span></button>
-        </label>-->
-
-        <label class="item item-input">
-          <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center">
-        </label>
-
-      </div>
-
-      <div class="padding">
-
-        <button class="button button-block button-balanced" ng-disabled="locationForm.$invalid">Save Location</button>
-
       </div>
 
     </form>
 
   </ion-content>
-
 <!--  <ion-header-bar class="bar-calm">
 
     <h1 class="title">Detail Your Point</h1>
@@ -92,5 +33,4 @@
     </div>
 
   </ion-header-bar>-->
-
 </ion-modal-view>
