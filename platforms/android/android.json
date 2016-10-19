@@ -59,6 +59,10 @@
                         {
                             "xml": "<feature name=\"Brightness\"><param name=\"android-package\" value=\"org.apache.cordova.plugin.Brightness.BrightnessPlugin\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"PowerManagement\"><param name=\"android-package\" value=\"org.apache.cordova.powermanagement.PowerManagement\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -93,6 +97,10 @@
                         {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\" />",
                             "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.WAKE_LOCK\" />",
+                            "count": 1
                         }
                     ]
                 }
@@ -105,6 +113,11 @@
                             "count": 1
                         }
                     ]
+                }
+            },
+            "res/xml/plugins.xml": {
+                "parents": {
+                    "/plugins": []
                 }
             }
         }
@@ -156,6 +169,9 @@
             "PACKAGE_NAME": "com.ionicframework.mymapdemo330562"
         },
         "cordova-plugin-brightness": {
+            "PACKAGE_NAME": "com.ionicframework.mymapdemo330562"
+        },
+        "at.gofg.sportscomputer.powermanagement": {
             "PACKAGE_NAME": "com.ionicframework.mymapdemo330562"
         }
     },
@@ -584,6 +600,14 @@
             "clobbers": [
                 "cordova.plugins.brightness"
             ]
+        },
+        {
+            "id": "at.gofg.sportscomputer.powermanagement.device",
+            "file": "plugins/at.gofg.sportscomputer.powermanagement/www/powermanagement.js",
+            "pluginId": "at.gofg.sportscomputer.powermanagement",
+            "clobbers": [
+                "window.powerManagement"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -602,6 +626,7 @@
         "cordova-plugin-shake": "0.5.4",
         "cordova-plugin-tts": "0.2.3",
         "org.apache.cordova.speech.speechrecognition": "0.1.1",
-        "cordova-plugin-brightness": "0.1.5"
+        "cordova-plugin-brightness": "0.1.5",
+        "at.gofg.sportscomputer.powermanagement": "1.1.2"
     }
 }

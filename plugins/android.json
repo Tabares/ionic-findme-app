@@ -45,6 +45,9 @@
         },
         "cordova-plugin-brightness": {
             "PACKAGE_NAME": "com.ionicframework.mymapdemo330562"
+        },
+        "at.gofg.sportscomputer.powermanagement": {
+            "PACKAGE_NAME": "com.ionicframework.mymapdemo330562"
         }
     },
     "dependent_plugins": {

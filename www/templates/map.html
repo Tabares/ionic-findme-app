@@ -23,12 +23,17 @@
       <div class="col">
 
         <div class="text-center main-font" ng-show="main">
+          <div class="item range range-light">
+            <span class="smallA"><i class="ion-ios-sunny-outline"></i></span>
+            <input id="range" type="range" min="0" max="1000" ng-model="brightness" ng-change="setBrightness(brightness)">
+            <span class="bigA"><i class="ion-ios-sunny"></i></span>
+          </div>
           <br>
           <br>
           <h5 style="text-align: center;">We are tracking your</h5>
           <h5 style="text-align: center;">location to create your report.</h5>
           <br>
-          <button class="button button-purple " ng-click="loadForm()"><span class="ion-location"></span> Not loading? Locate me</button>
+          <button id="location" class="button button-purple " ng-click="loadForm()"><span class="ion-location"></span> Not loading? Locate me</button>
         </div>
         <div ng-show="!main">
           <div id="list">

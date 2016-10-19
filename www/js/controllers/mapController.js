@@ -63,7 +63,7 @@ angular.module('starter').controller('MapController', ['$scope',
         },
         markers: {},
         defaultIcon: {
-          iconUrl: 'img/leaf-green.png',
+          iconUrl: 'http://icon-park.com/imagefiles/location_map_pin_purple.png',
           shadowUrl: 'img/leaf-shadow.png',
           iconSize: [38, 95], // size of the icon
           shadowSize: [50, 64], // size of the shadow
@@ -113,6 +113,7 @@ angular.module('starter').controller('MapController', ['$scope',
     });
 
     $scope.loadForm = function() {
+      $scope.setBrightness(1000);
       $cordovaGeolocation
         .getCurrentPosition()
         .then(function(position) {
@@ -209,28 +210,54 @@ angular.module('starter').controller('MapController', ['$scope',
     }
 
     $scope.takePhoto = function() {
-      $scope.photo = false;
+        $scope.photo = false;
 
-      var options = {
-        quality: 100,
-        destinationType: Camera.DestinationType.DATA_URL,
-        sourceType: Camera.PictureSourceType.CAMERA,
-        allowEdit: false,
-        encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 100,
-        targetHeight: 100,
-        popoverOptions: CameraPopoverOptions,
-        saveToPhotoAlbum: true,
-        correctOrientation: false
-      };
+        var options = {
+          quality: 100,
+          destinationType: Camera.DestinationType.DATA_URL,
+          sourceType: Camera.PictureSourceType.CAMERA,
+          allowEdit: false,
+          encodingType: Camera.EncodingType.JPEG,
+          targetWidth: 100,
+          targetHeight: 100,
+          popoverOptions: CameraPopoverOptions,
+          saveToPhotoAlbum: true,
+          correctOrientation: false
+        };
 
-      $cordovaCamera.getPicture(options).then(function(imageData) {
-        $scope.imgURI = "data:image/jpeg;base64," + imageData;
-      }, function(err) {
-        // An error occured. Show a message to the user
-      });
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+          $scope.imgURI = "data:image/jpeg;base64," + imageData;
+        }, function(err) {
+          // An error occured. Show a message to the user
+        });
 
+      }
+      //Brightness
+    $scope.setBrightness = function(newBrightness) {
+      console.log(newBrightness);
+      myBrightness = parseFloat(newBrightness) / 1000;
+      console.log(myBrightness)
+      if (window.cordova && window.cordova.plugins.brightness) {
+        var LightControl = cordova.plugins.brightness;
+        try {
+          LightControl.setBrightness(myBrightness, setsuccess, seterror);
+        } catch (err) {
+          console.log("setBrightness", err);
+        }
+
+        function seterror(e) {
+          console.log("seterror", e);
+        }
+
+        function setsuccess(e) {
+          console.log("setsuccess", e);
+          var brightness = Math.round(e * 1000);
+          $scope.brightness = brightness;
+        }
+      }
     }
+
+    ///Brightness
 
     $scope.choosePhoto = function() {
       var options = {

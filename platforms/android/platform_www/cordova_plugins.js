@@ -423,6 +423,14 @@ module.exports = [
         "clobbers": [
             "cordova.plugins.brightness"
         ]
+    },
+    {
+        "id": "at.gofg.sportscomputer.powermanagement.device",
+        "file": "plugins/at.gofg.sportscomputer.powermanagement/www/powermanagement.js",
+        "pluginId": "at.gofg.sportscomputer.powermanagement",
+        "clobbers": [
+            "window.powerManagement"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -443,7 +451,8 @@ module.exports.metadata =
     "cordova-plugin-shake": "0.5.4",
     "cordova-plugin-tts": "0.2.3",
     "org.apache.cordova.speech.speechrecognition": "0.1.1",
-    "cordova-plugin-brightness": "0.1.5"
+    "cordova-plugin-brightness": "0.1.5",
+    "at.gofg.sportscomputer.powermanagement": "1.1.2"
 };
 // BOTTOM OF METADATA
 });

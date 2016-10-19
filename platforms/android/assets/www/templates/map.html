@@ -14,20 +14,43 @@
 
   </ion-content>
 
-  <ion-footer-bar align-title="center" class="bar main-body" >
+  <ion-footer-bar align-title="center" class="bar main-body">
     <!--<h1 class="title">Find me please!!!</h1>-->
     <!---forms-->
 
 
     <div class="row">
       <div class="col">
-        <div class="text-center main-font" >
+
+        <div class="text-center main-font" ng-show="main">
+          <div class="item range range-light">
+            <span class="smallA"><i class="ion-ios-sunny-outline"></i></span>
+            <input id="range" type="range" min="0" max="1000" ng-model="brightness" ng-change="setBrightness(brightness)">
+            <span class="bigA"><i class="ion-ios-sunny"></i></span>
+          </div>
           <br>
           <br>
           <h5 style="text-align: center;">We are tracking your</h5>
           <h5 style="text-align: center;">location to create your report.</h5>
           <br>
-          <button class="button button-purple " ng-click="loadForm()"><span class="ion-location"></span> Not loading? Locate me</button>
+          <button id="location" class="button button-purple " ng-click="loadForm()"><span class="ion-location"></span> Not loading? Locate me</button>
+        </div>
+        <div ng-show="!main">
+          <div id="list">
+            <ul class="custom-bullet ">
+              <li></li>
+
+              <li> Thanks!
+                <br>Your report has been sent.
+                <br>
+                <br>We'll let you know when help is on its way
+              </li>
+              <li></li>
+            </ul>
+          </div>
+          <br>
+          <br>
+          <button class="button button-purple " ng-click="cancel()"><span class="icon ion-close"></span> Cancel Report</button>
         </div>
       </div>
     </div>

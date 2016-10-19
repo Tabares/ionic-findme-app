@@ -33,4 +33,5 @@ Added plugins
 $ ionic plugin add cordova-plugin-media-capture
 $ ionic plugin add cordova-plugin-camera
 $ ionic plugin add https://github.com/leecrossley/cordova-plugin-shake.git
+$ ionic plugin add https://github.com/alunny/ScreenDim.git
 ```
