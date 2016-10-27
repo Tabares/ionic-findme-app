@@ -10,12 +10,18 @@ angular.module('starter', ['ionic', 'leaflet-directive', 'ngCordova', 'igTruncat
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     var onShake = function() {
-      alert("device is being shaken");
+      //alert("device is being shaken");
       //$scope.locate();
       $timeout(function() {
         var el = document.getElementById('location');
         angular.element(el).triggerHandler('click');
       }, 0);
+      $timeout(function() {
+        var el = document.getElementsByClassName('button-positive');
+        angular.element(el).triggerHandler('click');
+      }, 0);
+
+
     };
     var onError = function() {
       // Fired when there is an accelerometer error (optional)

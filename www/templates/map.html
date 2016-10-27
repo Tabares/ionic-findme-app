@@ -10,7 +10,9 @@
 
   <ion-content data-tap-disabled="true" ng-style="{ 'height': '60%'}">
 
-    <leaflet defaults="map.defaults" center="map.center" markers="map.markers" ng-if="map"></leaflet>
+    <leaflet defaults="map.defaults" center="map.center" markers="map.markers" ng-if="map">
+
+    </leaflet>
 
   </ion-content>
 
@@ -23,17 +25,23 @@
       <div class="col">
 
         <div class="text-center main-font" ng-show="main">
+          <!--
           <div class="item range range-light">
             <span class="smallA"><i class="ion-ios-sunny-outline"></i></span>
             <input id="range" type="range" min="0" max="1000" ng-model="brightness" ng-change="setBrightness(brightness)">
             <span class="bigA"><i class="ion-ios-sunny"></i></span>
-          </div>
+          </div>-->
           <br>
           <br>
           <h5 style="text-align: center;">We are tracking your</h5>
           <h5 style="text-align: center;">location to create your report.</h5>
           <br>
           <button id="location" class="button button-purple " ng-click="loadForm()"><span class="ion-location"></span> Not loading? Locate me</button>
+          <br>
+          <br>
+
+
+          <button class="button button-invisible " ng-click="hideApp()"></button>
         </div>
         <div ng-show="!main">
           <div id="list">

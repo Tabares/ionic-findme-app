@@ -17,12 +17,39 @@ body {
   text-align: center;
 }
 
+.front-screen{
+  width: 100% !important;
+  height: 100% !important;
+  background: black  !important;
+}
 
+.popup{
+  background: black  !important;
+  border-bottom: black !important;
+}
+.popup-head{
+  background: black  !important;
+  border-bottom: black !important;
+  height: 60%;
+}
+.button-positive{
+  background: black  !important;
+  color : black !important;
+  height: 60%;
+}
 
 .button-purple{
   background-color: #984ec2 !important;
   border-color: white !important;
   color: white !important;
+  width: 100%;
+
+}
+
+.button-invisible{
+  background-color: #984ec2 !important;
+  border-color: #984ec2 !important;
+  color: #984ec2 !important;
   width: 100%;
 
 }
@@ -109,8 +136,7 @@ body {
 .front-screen{
   width: 100% !important;
   height: 100% !important;
-  background: #ef473a  !important;
-  opacity: 0.7;
+
 
 
 }

@@ -6,7 +6,17 @@ angular.module('starter').factory('LocationsService', [ function() {
     {
       name : "Monterrey, Nuevo León",
       lat : 25.6729159,
-      lng : -100.3098922
+      lng : -100.3098922,
+      icon: {
+        iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Map_pin_icon.svg/1000px-Map_pin_icon.svg.png',
+        iconSize: [38, 45], // size of the icon
+        shadowSize: [50, 64], // size of the shadow
+        iconAnchor: [18, 94], // point of the icon which will correspond to marker's location
+        shadowAnchor: [4, 62], // the same for the shadow
+        popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+
+
+      }
     },
     {
       name : "Washington D.C., USA",

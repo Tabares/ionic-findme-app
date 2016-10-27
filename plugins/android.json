@@ -48,6 +48,9 @@
         },
         "at.gofg.sportscomputer.powermanagement": {
             "PACKAGE_NAME": "com.ionicframework.mymapdemo330562"
+        },
+        "cordova-plugin-fullscreen": {
+            "PACKAGE_NAME": "com.ionicframework.mymapdemo330562"
         }
     },
     "dependent_plugins": {

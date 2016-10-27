@@ -9,6 +9,7 @@ angular.module('starter').controller('MapController', ['$scope',
   '$cordovaCapture',
   '$timeout',
   '$cordovaDevice',
+  '$http',
   function(
     $scope,
     $cordovaGeolocation,
@@ -20,7 +21,8 @@ angular.module('starter').controller('MapController', ['$scope',
     $cordovaCamera,
     $cordovaCapture,
     $timeout,
-    $cordovaDevice
+    $cordovaDevice,
+    $http
   ) {
     /**
      * Once state loaded, get put map on scope.
@@ -30,7 +32,7 @@ angular.module('starter').controller('MapController', ['$scope',
       $scope.locations = LocationsService.savedLocations;
       $scope.newLocation;
 
-      if (!InstructionsService.instructions.newLocations.seen) {
+      /*if (!InstructionsService.instructions.newLocations.seen) {
 
         var instructionsPopup = $ionicPopup.alert({
           title: 'Find Me!!!',
@@ -40,8 +42,8 @@ angular.module('starter').controller('MapController', ['$scope',
         instructionsPopup.then(function(res) {
           InstructionsService.instructions.newLocations.seen = true;
         });
-
-      }
+        $scope.setBrightness(1);
+      }*/
 
       //var greenIcon = new LeafIcon({iconUrl: 'http://www.clipartbest.com/cliparts/RiA/A5L/RiAA5LkBT.png'});
       var greenIcon = L.icon({
@@ -61,16 +63,42 @@ angular.module('starter').controller('MapController', ['$scope',
           maxZoom: 18,
           zoomControlPosition: 'topright'
         },
-        markers: {},
+        markers: {
+          m1: {
+            lat: 25.6729159,
+            lng: -100.3098922,
+            message: "I'm a static marker with defaultIcon",
+            focus: false,
+            icon: {
+              iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Map_pin_icon.svg/1000px-Map_pin_icon.svg.png',
+              iconSize: [38, 45], // size of the icon
+              shadowSize: [50, 64], // size of the shadow
+              iconAnchor: [18, 94], // point of the icon which will correspond to marker's location
+              shadowAnchor: [4, 62], // the same for the shadow
+              popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+
+
+            }
+          },
+        },
         defaultIcon: {
-          iconUrl: 'http://icon-park.com/imagefiles/location_map_pin_purple.png',
-          shadowUrl: 'img/leaf-shadow.png',
+          iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Map_pin_icon.svg/1000px-Map_pin_icon.svg.png',
+          shadowUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Map_pin_icon.svg/1000px-Map_pin_icon.svg.png',
           iconSize: [38, 95], // size of the icon
           shadowSize: [50, 64], // size of the shadow
           iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
           shadowAnchor: [4, 62], // the same for the shadow
           popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
 
+        },
+        leafIcon: {
+          iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Map_pin_icon.svg/1000px-Map_pin_icon.svg.png',
+          shadowUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Map_pin_icon.svg/1000px-Map_pin_icon.svg.png',
+          iconSize: [38, 95], // size of the icon
+          shadowSize: [50, 64], // size of the shadow
+          iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+          shadowAnchor: [4, 62], // the same for the shadow
+          popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
         },
         events: {
           map: {
@@ -131,10 +159,21 @@ angular.module('starter').controller('MapController', ['$scope',
     }
 
     $scope.saveLocation = function() {
-      alert('You alert detail has been sent, please wait!!!');
       LocationsService.savedLocations.push($scope.newLocation);
       //$scope.modal.hide();
       $scope.goTo(LocationsService.savedLocations.length - 1, 18);
+    };
+
+    $scope.hideApp = function() {
+      var instructionsPopup = $ionicPopup.alert({
+        title: 'Find Me!!!',
+        cssClass: 'front-screen',
+        template: InstructionsService.instructions.newLocations.text
+      });
+      instructionsPopup.then(function(res) {
+        InstructionsService.instructions.newLocations.seen = true;
+      });
+      $scope.setBrightness(1);
     };
 
     /**
@@ -158,6 +197,16 @@ angular.module('starter').controller('MapController', ['$scope',
         focus: true,
         draggable: false
       };
+
+      $scope.map.icon = {
+        iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Map_pin_icon.svg/1000px-Map_pin_icon.svg.png',
+        shadowUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Map_pin_icon.svg/1000px-Map_pin_icon.svg.png',
+        iconSize: [38, 95], // size of the icon
+        shadowSize: [50, 64], // size of the shadow
+        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+        shadowAnchor: [4, 62], // the same for the shadow
+        popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+      }
 
     };
 
@@ -201,14 +250,101 @@ angular.module('starter').controller('MapController', ['$scope',
       $scope.modal.hide();
       $scope.main = false;
       $scope.goTo(LocationsService.savedLocations.length - 1, 18);
+      $scope.postData();
     }
+
+    $scope.postData = function() {
+      console.log($scope.newLocation);
+      var url = 'http://starkdemo.southcentralus.cloudapp.azure.com:8080/safeReporter-1.0/reporter/sendIssue';
+      var data = {
+        "coordinate": {
+          "latitude": 20,
+          "longitude": 100
+        },
+        "description": "req1"
+      };
+      var req = {
+        method: 'POST',
+        url: "http://starkdemo.southcentralus.cloudapp.azure.com:8080/safeReporter-1.0/reporter/sendIssue",
+        headers: {
+          //'Content-Type':
+        },
+        data: {
+          "coordinate": {
+            "latitude": 20,
+            "longitude": 100
+          },
+          "description": "req2"
+        }
+      };
+
+
+      //$http.post(url, data).then(successCallback, errorCallback);
+
+      /*  $http(req).then(function(response) {alert('cpol');
+    }, function(error) {//alert('error'+error)
+  });*/
+      console.log($scope.imgURI);
+      var formData = new FormData();
+      formData.append('file', $scope.imgURI);
+      $http.post(url, formData, {
+        transformRequest: angular.identity,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function(response) {
+        console.log(response);
+        // ...
+      });
+
+
+      $http({
+        url: 'http://starkdemo.southcentralus.cloudapp.azure.com:8080/safeReporter-1.0/reporter/sendIssue',
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          //'Content-Type': 'multipart/form-data'
+          'Content-Type': undefined
+        },
+        data: {
+          "coordinate": {
+            "latitude": 20,
+            "longitude": 100
+          },
+          "description": "sssscvsdfbvgbgb"
+        },
+        transformRequest: function(data, headersGetter) {
+            var formData = new FormData();
+            angular.forEach(data, function(value, key) {
+              formData.append(key, value);
+            });
+
+            var headers = headersGetter();
+            delete headers['Content-Type'];
+
+            return formData;
+          }
+          //data: {"coordinate": {"latitude": $scope.newLocation.lat, "longitude": $scope.newLocation.lng}, "description": $scope.newLocation.name}
+      }).then(function(response) {
+          // success
+          alert("Your report has been created successfully!");
+        },
+        function(response) { // optional
+          // failed
+          //alert("Your report has been created! " + JSON.stringify(response));
+          console.log(JSON.stringify(response));
+
+
+        });
+    }
+
 
     $scope.removePhoto = function() {
 
       $scope.photo = true;
       $scope.imgURI = "";
     }
-
+    $scope.imgURI = "file:///C:/Users/jose.tabares.sotelo/Pictures/ext.jpg";
     $scope.takePhoto = function() {
         $scope.photo = false;
 
@@ -228,6 +364,8 @@ angular.module('starter').controller('MapController', ['$scope',
         $cordovaCamera.getPicture(options).then(function(imageData) {
           $scope.imgURI = "data:image/jpeg;base64," + imageData;
         }, function(err) {
+          console.log(err);
+
           // An error occured. Show a message to the user
         });
 
@@ -254,6 +392,8 @@ angular.module('starter').controller('MapController', ['$scope',
           var brightness = Math.round(e * 1000);
           $scope.brightness = brightness;
         }
+        LightControl.setKeepScreenOn(true);
+
       }
     }
 
@@ -340,6 +480,7 @@ angular.module('starter').controller('MapController', ['$scope',
       };
       $scope.newLocation.name = '';
       $scope.goTo(0, 12);
+      $scope.setBrightness(1);
       $scope.main = true;
     }
 
