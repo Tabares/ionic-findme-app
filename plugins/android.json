@@ -51,6 +51,9 @@
         },
         "cordova-plugin-fullscreen": {
             "PACKAGE_NAME": "com.ionicframework.mymapdemo330562"
+        },
+        "cordova-plugin-filepath": {
+            "PACKAGE_NAME": "com.ionicframework.mymapdemo330562"
         }
     },
     "dependent_plugins": {

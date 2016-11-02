@@ -439,6 +439,14 @@ module.exports = [
         "clobbers": [
             "AndroidFullScreen"
         ]
+    },
+    {
+        "id": "cordova-plugin-filepath.FilePath",
+        "file": "plugins/cordova-plugin-filepath/www/FilePath.js",
+        "pluginId": "cordova-plugin-filepath",
+        "clobbers": [
+            "window.FilePath"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -461,7 +469,8 @@ module.exports.metadata =
     "org.apache.cordova.speech.speechrecognition": "0.1.1",
     "cordova-plugin-brightness": "0.1.5",
     "at.gofg.sportscomputer.powermanagement": "1.1.2",
-    "cordova-plugin-fullscreen": "1.1.0"
+    "cordova-plugin-fullscreen": "1.1.0",
+    "cordova-plugin-filepath": "1.0.2"
 };
 // BOTTOM OF METADATA
 });

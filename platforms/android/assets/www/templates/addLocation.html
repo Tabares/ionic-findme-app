@@ -11,7 +11,8 @@
             <button class="button button-block button-gray" ng-click = "record()"><span class="icon ion-mic-a micro"></span></button>
             <button class="button button-block button-white" ng-click = "takePhoto()" ng-hide="!photo"><span class="icon ion-ios-camera" ></span> Attach a photograph</button>
             <label class="item item-input photo-label" ng-hide="photo" >
-              <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center; width: 75px">
+              <img id="pic" ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center; width: 75px">
+              <div>{{imgURI}}</div>
               <button class="button button-block button-hide" ng-click="removePhoto()"><span class="icon ion-close"></span> Delete photo</button>
             </label>
             <button class="button button-block button-purple" ng-click = "sendReport()" ng-disabled="myForm.$invalid">Send Report</button>

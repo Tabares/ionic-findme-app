@@ -246,105 +246,55 @@ angular.module('starter').controller('MapController', ['$scope',
 
 
     $scope.sendReport = function() {
+      $scope.postData();
       LocationsService.savedLocations.push($scope.newLocation);
       $scope.modal.hide();
       $scope.main = false;
       $scope.goTo(LocationsService.savedLocations.length - 1, 18);
-      $scope.postData();
     }
 
     $scope.postData = function() {
-      console.log($scope.newLocation);
-      var url = 'http://starkdemo.southcentralus.cloudapp.azure.com:8080/safeReporter-1.0/reporter/sendIssue';
-      var data = {
-        "coordinate": {
-          "latitude": 20,
-          "longitude": 100
-        },
-        "description": "req1"
-      };
-      var req = {
-        method: 'POST',
-        url: "http://starkdemo.southcentralus.cloudapp.azure.com:8080/safeReporter-1.0/reporter/sendIssue",
-        headers: {
-          //'Content-Type':
-        },
-        data: {
-          "coordinate": {
-            "latitude": 20,
-            "longitude": 100
-          },
-          "description": "req2"
-        }
-      };
+      //this.uploadFileToUrl = function(file, uploadUrl){*/
+      alert($scope.imgURI);
+      alert($scope.file2);
+      alert($scope.file1);
+      alert('file three');
 
+      alert($scope.file3);
 
-      //$http.post(url, data).then(successCallback, errorCallback);
+      //var file = $scope.getFileEntry($scope.imgURI);
 
-      /*  $http(req).then(function(response) {alert('cpol');
-    }, function(error) {//alert('error'+error)
-  });*/
-      console.log($scope.imgURI);
-      var formData = new FormData();
-      formData.append('file', $scope.imgURI);
-      $http.post(url, formData, {
-        transformRequest: angular.identity,
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }).then(function(response) {
-        console.log(response);
-        // ...
-      });
-
-
-      $http({
-        url: 'http://starkdemo.southcentralus.cloudapp.azure.com:8080/safeReporter-1.0/reporter/sendIssue',
-        method: "POST",
-        headers: {
-          'Accept': 'application/json',
-          //'Content-Type': 'multipart/form-data'
-          'Content-Type': undefined
-        },
-        data: {
-          "coordinate": {
-            "latitude": 20,
-            "longitude": 100
-          },
-          "description": "sssscvsdfbvgbgb"
-        },
-        transformRequest: function(data, headersGetter) {
-            var formData = new FormData();
-            angular.forEach(data, function(value, key) {
-              formData.append(key, value);
-            });
-
-            var headers = headersGetter();
-            delete headers['Content-Type'];
-
-            return formData;
+      /*if(!$scope.imgURI){
+        $scope.imgURI = null;
+      }*/
+      var file = $scope.file3;
+      var uploadUrl = "http://starkdemo.southcentralus.cloudapp.azure.com:8080/safeReporter-1.0/reporter/sendIssue";
+      var json = '{ "coordinate":  { "latitude": ' + $scope.newLocation.lat + ', "longitude": ' + $scope.newLocation.lng + '}, "description": "' + $scope.newLocation.name + '"}';
+      var fd = new FormData();
+      fd.append('report', json)
+      fd.append('imageReport', file);
+      $http.post(uploadUrl, fd, {
+          transformRequest: angular.identity,
+          headers: {
+            'Content-Type': undefined
           }
-          //data: {"coordinate": {"latitude": $scope.newLocation.lat, "longitude": $scope.newLocation.lng}, "description": $scope.newLocation.name}
-      }).then(function(response) {
-          // success
-          alert("Your report has been created successfully!");
-        },
-        function(response) { // optional
-          // failed
-          //alert("Your report has been created! " + JSON.stringify(response));
-          console.log(JSON.stringify(response));
-
-
+        })
+        .success(function(response) {
+          alert('cpol' + response)
+        })
+        .error(function(error) {
+          alert('error ' + error)
         });
+
     }
 
 
     $scope.removePhoto = function() {
 
-      $scope.photo = true;
-      $scope.imgURI = "";
-    }
-    $scope.imgURI = "file:///C:/Users/jose.tabares.sotelo/Pictures/ext.jpg";
+        $scope.photo = true;
+        $scope.imgURI = "";
+      }
+      //Test link //$scope.imgURI = "file:///C:/Users/jose.tabares.sotelo/Pictures/ext.jpg";
     $scope.takePhoto = function() {
         $scope.photo = false;
 
@@ -363,12 +313,96 @@ angular.module('starter').controller('MapController', ['$scope',
 
         $cordovaCamera.getPicture(options).then(function(imageData) {
           $scope.imgURI = "data:image/jpeg;base64," + imageData;
+
+          ///prueba 2
+          //FilePath will resolve the path
+        /*  window.FilePath.resolveNativePath(imageData, function(result) {
+            imageURI = 'file://' + result;
+            console.log(imageURI);
+            alert('modified uri ' + imageURI);
+            $scope.file3 = imageURI;
+            resolve(imageURI);
+          });*/
+          ////$scope.imgURI = "data:image/jpeg;base64," + imageData;
+          //$scope.file3 = "data:image/jpeg;base64," + imageData;
+          //alert('getfilexxxx');
+
+          $scope.file3 = imageData;//fail on server
+          //$scope.getFileEntry(imageData);
+
+          /////////////////////////////////////////////////////////////////
+          ///test get file3
+
+
+          // 4
+          onImageSuccess(imageData);
+
+          function onImageSuccess(fileURI) {
+            createFileEntry(fileURI);
+          }
+
+          function createFileEntry(fileURI) {
+            window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
+          }
+
+          // 5
+          function copyFile(fileEntry) {
+            alert(fileEntry);
+
+            var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
+            alert(name);
+            var newName = makeid() + name;
+
+            window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileSystem2) {
+                fileEntry.copyTo(
+                  fileSystem2,
+                  newName,
+                  onCopySuccess,
+                  fail
+                );
+              },
+              fail);
+          }
+
+          // 6
+          function onCopySuccess(entry) {
+            $scope.$apply(function() {
+              $scope.images.push(entry.nativeURL);
+            });
+          }
+
+          function fail(error) {
+            console.log("fail: " + error.code);
+          }
+
+          function makeid() {
+            var text = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+            for (var i = 0; i < 5; i++) {
+              text += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
+            return text;
+          }
+
+          ///test with function
+
+
+
+
+
+
+
+
+          ////////////////////////////////////////////////////////
+
         }, function(err) {
           console.log(err);
+          $scope.imgURI = "file:///C:/Users/jose.tabares.sotelo/Pictures/ext.jpg";
 
           // An error occured. Show a message to the user
         });
-
+        //alert($scope.imgURI);
       }
       //Brightness
     $scope.setBrightness = function(newBrightness) {
@@ -398,6 +432,44 @@ angular.module('starter').controller('MapController', ['$scope',
     }
 
     ///Brightness
+
+     $scope.getFileEntry = function(imgUri) {
+      window.resolveLocalFileSystemURL(imgUri, function success(fileEntry) {
+
+        // Do something with the FileEntry object, like write to it, upload it, etc.
+        // writeFile(fileEntry, imgUri);
+        alert('getfile');
+        alert("got file: " + fileEntry.fullPath);
+        $scope.file3 = fileEntry.fullPath;
+        // displayFileData(fileEntry.nativeURL, "Native URL");
+
+      }, function() {
+        // If don't get the FileEntry (which may happen when testing
+        // on some emulators), copy to a new FileEntry.
+        $scope.createNewFileEntry(imgUri);
+      });
+    }
+
+    $scope.createNewFileEntry = function   (imgUri) {
+      window.resolveLocalFileSystemURL(cordova.file.cacheDirectory, function success(dirEntry) {
+
+        // JPEG file
+        dirEntry.getFile("tempFile.jpeg", {
+          create: true,
+          exclusive: false
+        }, function(fileEntry) {
+
+          // Do something with it, like write to it, upload it, etc.
+          // writeFile(fileEntry, imgUri);
+          alert('ddd')
+          alert("got file: " + fileEntry.fullPath);
+          // displayFileData(fileEntry.fullPath, "File copied to");
+
+        }, onErrorCreateFile);
+
+      }, onErrorResolveUrl);
+    }
+
 
     $scope.choosePhoto = function() {
       var options = {
