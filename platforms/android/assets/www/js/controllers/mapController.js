@@ -70,8 +70,8 @@ angular.module('starter').controller('MapController', ['$scope',
             message: "I'm a static marker with defaultIcon",
             focus: false,
             icon: {
-              iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Map_pin_icon.svg/1000px-Map_pin_icon.svg.png',
-              iconSize: [38, 45], // size of the icon
+              iconUrl: 'img/pin.png',
+              iconSize: [38, 40], // size of the icon
               shadowSize: [50, 64], // size of the shadow
               iconAnchor: [18, 94], // point of the icon which will correspond to marker's location
               shadowAnchor: [4, 62], // the same for the shadow
@@ -82,8 +82,7 @@ angular.module('starter').controller('MapController', ['$scope',
           },
         },
         defaultIcon: {
-          iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Map_pin_icon.svg/1000px-Map_pin_icon.svg.png',
-          shadowUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Map_pin_icon.svg/1000px-Map_pin_icon.svg.png',
+          iconUrl: 'img/pin.png',
           iconSize: [38, 95], // size of the icon
           shadowSize: [50, 64], // size of the shadow
           iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
@@ -267,6 +266,7 @@ angular.module('starter').controller('MapController', ['$scope',
       /*if(!$scope.imgURI){
         $scope.imgURI = null;
       }*/
+      console.log(JSON.stringify($scope.newLocation));
       var file = $scope.file3;
       var uploadUrl = "http://starkdemo.southcentralus.cloudapp.azure.com:8080/safeReporter-1.0/reporter/sendIssue";
       var json = '{ "coordinate":  { "latitude": ' + $scope.newLocation.lat + ', "longitude": ' + $scope.newLocation.lng + '}, "description": "' + $scope.newLocation.name + '"}';
@@ -300,15 +300,11 @@ angular.module('starter').controller('MapController', ['$scope',
 
         var options = {
           quality: 100,
-          destinationType: Camera.DestinationType.DATA_URL,
-          sourceType: Camera.PictureSourceType.CAMERA,
-          allowEdit: false,
-          encodingType: Camera.EncodingType.JPEG,
-          targetWidth: 100,
-          targetHeight: 100,
-          popoverOptions: CameraPopoverOptions,
+          targetWidth: 1000,
+          targetHeight: 1000,
+          destinationType: navigator.camera.DestinationType.DATA_URL,
           saveToPhotoAlbum: true,
-          correctOrientation: false
+          correctOrientation: true
         };
 
         $cordovaCamera.getPicture(options).then(function(imageData) {
@@ -316,18 +312,18 @@ angular.module('starter').controller('MapController', ['$scope',
 
           ///prueba 2
           //FilePath will resolve the path
-        /*  window.FilePath.resolveNativePath(imageData, function(result) {
-            imageURI = 'file://' + result;
-            console.log(imageURI);
-            alert('modified uri ' + imageURI);
-            $scope.file3 = imageURI;
-            resolve(imageURI);
-          });*/
+          /*  window.FilePath.resolveNativePath(imageData, function(result) {
+              imageURI = 'file://' + result;
+              console.log(imageURI);
+              alert('modified uri ' + imageURI);
+              $scope.file3 = imageURI;
+              resolve(imageURI);
+            });*/
           ////$scope.imgURI = "data:image/jpeg;base64," + imageData;
           //$scope.file3 = "data:image/jpeg;base64," + imageData;
           //alert('getfilexxxx');
 
-          $scope.file3 = imageData;//fail on server
+          $scope.file3 = imageData; //fail on server
           //$scope.getFileEntry(imageData);
 
           /////////////////////////////////////////////////////////////////
@@ -433,7 +429,7 @@ angular.module('starter').controller('MapController', ['$scope',
 
     ///Brightness
 
-     $scope.getFileEntry = function(imgUri) {
+    $scope.getFileEntry = function(imgUri) {
       window.resolveLocalFileSystemURL(imgUri, function success(fileEntry) {
 
         // Do something with the FileEntry object, like write to it, upload it, etc.
@@ -450,7 +446,7 @@ angular.module('starter').controller('MapController', ['$scope',
       });
     }
 
-    $scope.createNewFileEntry = function   (imgUri) {
+    $scope.createNewFileEntry = function(imgUri) {
       window.resolveLocalFileSystemURL(cordova.file.cacheDirectory, function success(dirEntry) {
 
         // JPEG file

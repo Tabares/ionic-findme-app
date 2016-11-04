@@ -1,8 +1,5 @@
 <ion-modal-view>
-
-
   <ion-content class="padding">
-
     <form name="myForm">
       <div class="row">
         <div class="col">
@@ -12,18 +9,14 @@
             <button class="button button-block button-white" ng-click = "takePhoto()" ng-hide="!photo"><span class="icon ion-ios-camera" ></span> Attach a photograph</button>
             <label class="item item-input photo-label" ng-hide="photo" >
               <img id="pic" ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center; width: 75px">
-              <div>{{imgURI}}</div>
               <button class="button button-block button-hide" ng-click="removePhoto()"><span class="icon ion-close"></span> Delete photo</button>
             </label>
             <button class="button button-block button-purple" ng-click = "sendReport()" ng-disabled="myForm.$invalid">Send Report</button>
-
             <!--<button class="button button-block button-purple" ng-disabled="locationForm.$invalid" >Send Report</button>-->
           </div>
         </div>
       </div>
-
     </form>
-
   </ion-content>
 <!--  <ion-header-bar class="bar-calm">
 

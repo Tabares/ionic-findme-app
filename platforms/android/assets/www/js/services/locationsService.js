@@ -8,7 +8,7 @@ angular.module('starter').factory('LocationsService', [ function() {
       lat : 25.6729159,
       lng : -100.3098922,
       icon: {
-        iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Map_pin_icon.svg/1000px-Map_pin_icon.svg.png',
+        iconUrl: 'img/pin.png',
         iconSize: [38, 45], // size of the icon
         shadowSize: [50, 64], // size of the shadow
         iconAnchor: [18, 94], // point of the icon which will correspond to marker's location
