@@ -9,7 +9,7 @@ angular.module('starter').factory('LocationsService', [ function() {
       lng : -100.3098922,
       icon: {
         iconUrl: 'img/pin.png',
-        iconSize: [38, 45], // size of the icon
+        iconSize: [38, 44], // size of the icon
         shadowSize: [50, 64], // size of the shadow
         iconAnchor: [18, 94], // point of the icon which will correspond to marker's location
         shadowAnchor: [4, 62], // the same for the shadow

@@ -1,6 +1,14 @@
 body {
   height: auto;
   min-height: 100%;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 16px !important;
+
+}
+
+.input-text {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 14px;
 }
 
 .modal {
@@ -8,6 +16,8 @@ body {
   min-height: initial;
   top: initial;
   height: 60%;
+  font-family: 'Ubuntu', sans-serif;
+
   /*border-width: 1px;
   border-style: solid;*/
 }
@@ -15,6 +25,9 @@ body {
 .main-font h5{
   color: white;
   text-align: center;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 14px !important;
+
 }
 
 .front-screen{
@@ -36,6 +49,9 @@ body {
   background: black  !important;
   color : black !important;
   height: 60%;
+  font-family: 'Ubuntu', sans-serif;
+
+
 }
 
 .button-purple{
@@ -43,6 +59,11 @@ body {
   border-color: white !important;
   color: white !important;
   width: 100%;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 16px !important;
+
+
+
 
 }
 
@@ -51,6 +72,8 @@ body {
   border-color: #984ec2 !important;
   color: #984ec2 !important;
   width: 100%;
+  font-family: 'Ubuntu', sans-serif;
+
 
 }
 
@@ -59,6 +82,8 @@ body {
   border-color: #984ec2  !important;
   color: #984ec2  !important;
   width: 100%;
+  font-family: 'Ubuntu', sans-serif;
+
 
 }
 .button-gray{
@@ -68,6 +93,10 @@ body {
   width: 100%;
   margin-top: -10px !important;
   text-align: right !important;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 16px !important;
+
+
 }
 
 .button-hide{
@@ -77,7 +106,13 @@ body {
   width: 100%;
   margin: 0 !important;
   text-align: center !important;
+  font-family: 'Ubuntu', sans-serif;
+
 }
+textarea {
+  font-size: 16px !important;
+}
+
 
 .ion-ios-camera{
   float: left !important;
@@ -98,6 +133,7 @@ body {
 .micro{
   color: rgb(200, 200, 200);
   font-size: 10px !important;
+  font-family: 'Ubuntu', sans-serif;
 }
 .input-text{
   background-color: #f2f2f2;
@@ -217,12 +253,13 @@ ul.experiences li:last-child:before {
 {
     /*Using a Bootstrap glyphicon as the bullet point*/
     content: "\e080";
-    font-family: 'Glyphicons Halflings';
-    font-size: 9px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 14px;
     float: left;
     margin-top: 4px;
     margin-left: -17px;
     color: #CCCCCC;
+
 }
 
 
@@ -230,6 +267,9 @@ ul.experiences li:last-child:before {
   width: 80%;
   margin: 30px auto;
   font-size: 13px;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 14px;
+
 }
 #list ul {
   margin-top: 30px;

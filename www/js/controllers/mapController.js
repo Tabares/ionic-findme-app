@@ -61,17 +61,25 @@ angular.module('starter').controller('MapController', ['$scope',
         defaults: {
           tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
           maxZoom: 18,
-          zoomControlPosition: 'topright'
+          zoomControlPosition: 'topright',
+          icon: {
+            iconUrl: 'img/pin.png',
+            iconSize: [38, 44], // size of the icon
+            shadowSize: [50, 64], // size of the shadow
+            iconAnchor: [18, 94], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 62], // the same for the shadow
+            popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+          }
         },
         markers: {
-          m1: {
+          /*m1: {
             lat: 25.6729159,
             lng: -100.3098922,
             message: "I'm a static marker with defaultIcon",
             focus: false,
             icon: {
               iconUrl: 'img/pin.png',
-              iconSize: [38, 40], // size of the icon
+              iconSize: [38, 44], // size of the icon
               shadowSize: [50, 64], // size of the shadow
               iconAnchor: [18, 94], // point of the icon which will correspond to marker's location
               shadowAnchor: [4, 62], // the same for the shadow
@@ -79,9 +87,9 @@ angular.module('starter').controller('MapController', ['$scope',
 
 
             }
-          },
+          },*/
         },
-        defaultIcon: {
+        icon: {
           iconUrl: 'img/pin.png',
           iconSize: [38, 95], // size of the icon
           shadowSize: [50, 64], // size of the shadow
@@ -242,7 +250,7 @@ angular.module('starter').controller('MapController', ['$scope',
     $scope.photo = true;
     $scope.valid = true;
     $scope.main = true;
-
+    $scope.help = false;
 
     $scope.sendReport = function() {
       $scope.postData();
@@ -253,24 +261,16 @@ angular.module('starter').controller('MapController', ['$scope',
     }
 
     $scope.postData = function() {
-      //this.uploadFileToUrl = function(file, uploadUrl){*/
-      alert($scope.imgURI);
-      alert($scope.file2);
-      alert($scope.file1);
-      alert('file three');
 
-      alert($scope.file3);
+      var file = $scope.file3,
+        uploadUrl = "http://starkdemo.southcentralus.cloudapp.azure.com:8080/safeReporter-1.0/reporter/sendIssue",
+        json = '{ "coordinate":  { "latitude": ' + $scope.newLocation.lat + ', "longitude": ' + $scope.newLocation.lng + '}, "description": "' + $scope.newLocation.name + '"}',
+        fd = new FormData();
 
-      //var file = $scope.getFileEntry($scope.imgURI);
+      if(!$scope.newLocation.name){
+        $scope.newLocation.name  = "Car Crash";
+      }
 
-      /*if(!$scope.imgURI){
-        $scope.imgURI = null;
-      }*/
-      console.log(JSON.stringify($scope.newLocation));
-      var file = $scope.file3;
-      var uploadUrl = "http://starkdemo.southcentralus.cloudapp.azure.com:8080/safeReporter-1.0/reporter/sendIssue";
-      var json = '{ "coordinate":  { "latitude": ' + $scope.newLocation.lat + ', "longitude": ' + $scope.newLocation.lng + '}, "description": "' + $scope.newLocation.name + '"}';
-      var fd = new FormData();
       fd.append('report', json)
       fd.append('imageReport', file);
       $http.post(uploadUrl, fd, {
@@ -280,7 +280,8 @@ angular.module('starter').controller('MapController', ['$scope',
           }
         })
         .success(function(response) {
-          alert('cpol' + response)
+          //alert('cpol' + response)
+          $scope.help = true;
         })
         .error(function(error) {
           alert('error ' + error)
@@ -309,96 +310,11 @@ angular.module('starter').controller('MapController', ['$scope',
 
         $cordovaCamera.getPicture(options).then(function(imageData) {
           $scope.imgURI = "data:image/jpeg;base64," + imageData;
-
-          ///prueba 2
-          //FilePath will resolve the path
-          /*  window.FilePath.resolveNativePath(imageData, function(result) {
-              imageURI = 'file://' + result;
-              console.log(imageURI);
-              alert('modified uri ' + imageURI);
-              $scope.file3 = imageURI;
-              resolve(imageURI);
-            });*/
-          ////$scope.imgURI = "data:image/jpeg;base64," + imageData;
-          //$scope.file3 = "data:image/jpeg;base64," + imageData;
-          //alert('getfilexxxx');
-
           $scope.file3 = imageData; //fail on server
-          //$scope.getFileEntry(imageData);
-
-          /////////////////////////////////////////////////////////////////
-          ///test get file3
-
-
-          // 4
-          onImageSuccess(imageData);
-
-          function onImageSuccess(fileURI) {
-            createFileEntry(fileURI);
-          }
-
-          function createFileEntry(fileURI) {
-            window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
-          }
-
-          // 5
-          function copyFile(fileEntry) {
-            alert(fileEntry);
-
-            var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
-            alert(name);
-            var newName = makeid() + name;
-
-            window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileSystem2) {
-                fileEntry.copyTo(
-                  fileSystem2,
-                  newName,
-                  onCopySuccess,
-                  fail
-                );
-              },
-              fail);
-          }
-
-          // 6
-          function onCopySuccess(entry) {
-            $scope.$apply(function() {
-              $scope.images.push(entry.nativeURL);
-            });
-          }
-
-          function fail(error) {
-            console.log("fail: " + error.code);
-          }
-
-          function makeid() {
-            var text = "";
-            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-            for (var i = 0; i < 5; i++) {
-              text += possible.charAt(Math.floor(Math.random() * possible.length));
-            }
-            return text;
-          }
-
-          ///test with function
-
-
-
-
-
-
-
-
-          ////////////////////////////////////////////////////////
-
         }, function(err) {
           console.log(err);
-          $scope.imgURI = "file:///C:/Users/jose.tabares.sotelo/Pictures/ext.jpg";
-
           // An error occured. Show a message to the user
         });
-        //alert($scope.imgURI);
       }
       //Brightness
     $scope.setBrightness = function(newBrightness) {
@@ -434,8 +350,6 @@ angular.module('starter').controller('MapController', ['$scope',
 
         // Do something with the FileEntry object, like write to it, upload it, etc.
         // writeFile(fileEntry, imgUri);
-        alert('getfile');
-        alert("got file: " + fileEntry.fullPath);
         $scope.file3 = fileEntry.fullPath;
         // displayFileData(fileEntry.nativeURL, "Native URL");
 
@@ -454,12 +368,6 @@ angular.module('starter').controller('MapController', ['$scope',
           create: true,
           exclusive: false
         }, function(fileEntry) {
-
-          // Do something with it, like write to it, upload it, etc.
-          // writeFile(fileEntry, imgUri);
-          alert('ddd')
-          alert("got file: " + fileEntry.fullPath);
-          // displayFileData(fileEntry.fullPath, "File copied to");
 
         }, onErrorCreateFile);
 
@@ -550,6 +458,8 @@ angular.module('starter').controller('MapController', ['$scope',
       $scope.goTo(0, 12);
       $scope.setBrightness(1);
       $scope.main = true;
+      $scope.help = false;
+
     }
 
 
