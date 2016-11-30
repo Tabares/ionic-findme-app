@@ -263,7 +263,7 @@ angular.module('starter').controller('MapController', ['$scope',
     $scope.postData = function() {
 
       var file = $scope.file3,
-        uploadUrl = "http://starkdemo.southcentralus.cloudapp.azure.com:8080/safeReporter-1.0/reporter/sendIssue",
+        uploadUrl = "http://starkdns.southcentralus.cloudapp.azure.com:8080/safeReporter-1.0/reporter/sendIssue",
         json = '{ "coordinate":  { "latitude": ' + $scope.newLocation.lat + ', "longitude": ' + $scope.newLocation.lng + '}, "description": "' + $scope.newLocation.name + '"}',
         fd = new FormData();
 
