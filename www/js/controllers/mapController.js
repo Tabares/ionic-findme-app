@@ -162,7 +162,65 @@ angular.module('starter').controller('MapController', ['$scope',
           console.log(err);
         });
       $scope.modal.show();
+      $scope.accessToken = "f81d9aa60db1434eb52f95824f81c33e";
+      $scope.baseUrl = "https://api.api.ai/v1/";
+      console.log($scope.baseUrl);
+      //$scope.chat();
+      //$scope.chatbox = [{ message: 'hola', entity: 'human'}, { message: 'hola como estas', entity: 'bot'}];
+      $scope.chatbox = [];
+      $scope.textPlaceholder = "What's Happenig?";
+      console.log(chatbox)
+
       ///$scope.bright();
+    }
+
+    $scope.chat = function(){
+      //var text = $speechInput.val();
+      var text = $scope.newLocation.name;
+      $scope.newLocation.name = ""
+      $scope.chatbox.push({ message: text, entity: 'human'});
+       $scope.textPlaceholder = "...";
+
+      var req = {
+        method: 'POST',
+        url: $scope.baseUrl + "query",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        headers: {
+          "Authorization": "Bearer " + $scope.accessToken
+        },
+        data: JSON.stringify({query: text, lang: "en", sessionId: "yaydevdiner"}),
+      }
+
+      $http(req).then(
+        function(success) {
+         $scope.chatbox.push({ message: success.data.result.speech, entity: 'bot'});
+        }, function(error) {
+          // error
+          console.log("Location error!");
+          console.log(err);
+        });
+
+
+
+      /*$.ajax({
+        type: "POST",
+        url: $scope.baseUrl + "query",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        headers: {
+          "Authorization": "Bearer " + $scope.accessToken
+        },
+        data: JSON.stringify({query: text, lang: "en", sessionId: "yaydevdiner"}),
+
+        success: function(data) {
+          console.log(data);
+          //prepareResponse(data);
+        },
+        error: function() {
+          //respond(messageInternalError);
+        }
+      });*/
     }
 
     $scope.saveLocation = function() {
@@ -270,6 +328,8 @@ angular.module('starter').controller('MapController', ['$scope',
       if(!$scope.newLocation.name){
         $scope.newLocation.name  = "Car Crash";
       }
+
+      console.log(file);
 
       fd.append('report', json)
       fd.append('imageReport', file);

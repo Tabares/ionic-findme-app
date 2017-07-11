@@ -1,4 +1,8 @@
 {
   "name": "ionic-findme-app",
-  "app_id": ""
+  "app_id": "7562b796",
+  "type": "ionic1",
+  "watchPatterns": [
+    "scss/**/*"
+  ]
 }
