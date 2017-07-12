@@ -7,28 +7,36 @@
             <ul ng-repeat="message in chatbox">
               <li ng-class="message.entity === 'human' ? 'user-box' : 'bot-box'" >{{message.message}}</li>
             </ul>
-            <textarea type="text" class="input-text" ng-model="newLocation.name" placeholder="{{textPlaceholder}}" ng-minlength="1" ng-maxlength="200" required />
-            <button class="button button-block button-gray" ng-click = "record()"><span class="icon ion-mic-a micro"></span></button>
-            <button class="button button-block button-white" ng-click = "takePhoto()" ng-hide="!photo"><span class="icon ion-ios-camera" ></span> Attach a photograph</button>
-            <label class="item item-input photo-label" ng-hide="photo" >
+            <div class="action-container">
+              <button class="button button-block button-white" ng-click = "takePhoto()" ng-hide="!photo"><span class="icon ion-ios-camera" ></span> Attach a photograph</button>
+            </div>
+
+             <label class="item item-input photo-label" ng-hide="photo" >
               <img id="pic" ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center; width: 75px">
               <button class="button button-block button-hide" ng-click="removePhoto()"><span class="icon ion-close"></span> Delete photo</button>
             </label>
-            <button class="button button-block button-purple" ng-click = "chat()" ng-disabled="myForm.$invalid">Send</button>
-            <button class="button button-block button-purple" ng-click = "sendReport()" ng-disabled="myForm.$invalid">Send Report</button>
+
+            <div class="speech-container">
+              <textarea type="text" class="input-text" ng-model="newLocation.name" placeholder="{{textPlaceholder}}" ng-minlength="1" ng-maxlength="200" required />
+              <button class="button button-block button-gray hide-on-keyboard-open" ng-click = "record()"><span class="icon ion-mic-a micro"></span></button>
+              <button class="button button-block button-purple hide-on-keyboard-close" ng-click = "chat()" ng-disabled="myForm.$invalid">Send</button>
+            </div>
+
+            <!--
+            <button class="button button-block button-purple" ng-click = "sendReport()" ng-disabled="myForm.$invalid">Send Report</button>-->
             <!--<button class="button button-block button-purple" ng-disabled="locationForm.$invalid" >Send Report</button>-->
           </div>
         </div>
       </div>
     </form>
   </ion-content>
-<!--  <ion-header-bar class="bar-calm">
+<ion-header-bar class="bar-calm">
 
-    <h1 class="title">Detail Your Point</h1>
+    <h1 class="title emergency-title">Emergency Report</h1>
 
     <div class="buttons">
       <button class="button button-clear" ng-click="modal.hide()">Cancel</button>
     </div>
 
-  </ion-header-bar>-->
+  </ion-header-bar>
 </ion-modal-view>

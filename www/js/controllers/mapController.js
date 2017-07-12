@@ -10,6 +10,7 @@ angular.module('starter').controller('MapController', ['$scope',
   '$timeout',
   '$cordovaDevice',
   '$http',
+  '$cordovaKeyboard',
   function(
     $scope,
     $cordovaGeolocation,
@@ -22,7 +23,8 @@ angular.module('starter').controller('MapController', ['$scope',
     $cordovaCapture,
     $timeout,
     $cordovaDevice,
-    $http
+    $http,
+    $cordovaKeyboard
   ) {
     /**
      * Once state loaded, get put map on scope.
@@ -164,12 +166,12 @@ angular.module('starter').controller('MapController', ['$scope',
       $scope.modal.show();
       $scope.accessToken = "f81d9aa60db1434eb52f95824f81c33e";
       $scope.baseUrl = "https://api.api.ai/v1/";
-      console.log($scope.baseUrl);
       //$scope.chat();
       //$scope.chatbox = [{ message: 'hola', entity: 'human'}, { message: 'hola como estas', entity: 'bot'}];
-      $scope.chatbox = [];
       $scope.textPlaceholder = "What's Happenig?";
-      console.log(chatbox)
+      $scope.keyboard = false;
+      $scope.chatbox = [];
+
 
       ///$scope.bright();
     }
@@ -547,6 +549,7 @@ angular.module('starter').controller('MapController', ['$scope',
         if (event.results.length > 0) {
           $scope.newLocation.name = event.results[0][0].transcript;
           $scope.$apply();
+          $scope.chat();
         }
       };
       recognition.start();
