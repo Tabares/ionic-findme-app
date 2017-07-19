@@ -1,29 +1,41 @@
 <ion-modal-view>
-  <ion-content class="padding">
+  <ion-content class="padding has-footer">
     <form name="myForm">
       <div class="row">
         <div class="col">
           <div class="text-center main-font" >
-            <ul ng-repeat="message in chatbox">
-              <li ng-class="message.entity === 'human' ? 'user-box' : 'bot-box'" >{{message.message}}</li>
+
+              <ul ng-repeat="message in chatbox">
+                <li id="bottom" ng-class="message.entity === 'human' ? 'user-box' : 'bot-box'" >{{message.message}}  </li>
+              </ul>
+
+              <div id="textdiv">text</div>
+              <button id="add">click this</button>
+
+
+
+            <ul style="display: none">
+              <li ng-class="message.entity === 'human' ? 'user-box' : 'bot-box'" >
+                 <ion-content data-tap-disabled="true" ng-style="{ 'height': '30%'}">
+                 <leaflet defaults="map.defaults" center="map.center" markers="map.markers" ng-if="map">
+                 </leaflet>
+                 </ion-content>
+              </li>
             </ul>
-            <div class="action-container">
-              <button class="button button-block button-white" ng-click = "takePhoto()" ng-hide="!photo"><span class="icon ion-ios-camera" ></span> Attach a photograph</button>
-            </div>
+
+
 
              <label class="item item-input photo-label" ng-hide="photo" >
               <img id="pic" ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center; width: 75px">
               <button class="button button-block button-hide" ng-click="removePhoto()"><span class="icon ion-close"></span> Delete photo</button>
             </label>
 
-            <div class="speech-container">
-              <textarea type="text" class="input-text" ng-model="newLocation.name" placeholder="{{textPlaceholder}}" ng-minlength="1" ng-maxlength="200" required />
-              <button class="button button-block button-gray hide-on-keyboard-open" ng-click = "record()"><span class="icon ion-mic-a micro"></span></button>
-              <button class="button button-block button-purple hide-on-keyboard-close" ng-click = "chat()" ng-disabled="myForm.$invalid">Send</button>
-            </div>
+             <div class="action-container">
+      <button class="button button-block button-white" ng-click = "takePhoto()" ng-hide="!photo"><span class="icon ion-ios-camera" ></span> Attach a photograph</button>
 
-            <!--
-            <button class="button button-block button-purple" ng-click = "sendReport()" ng-disabled="myForm.$invalid">Send Report</button>-->
+    </div>
+
+            <!--<button class="button button-block button-purple" ng-click = "sendReport()" ng-disabled="myForm.$invalid">Send Report</button>-->
             <!--<button class="button button-block button-purple" ng-disabled="locationForm.$invalid" >Send Report</button>-->
           </div>
         </div>
@@ -39,4 +51,17 @@
     </div>
 
   </ion-header-bar>
+  <ion-footer-bar align-title="center" keyboard-attach class="custom-footer" >
+    <div class="row">
+    <div class="speech-container">
+        <textarea type="text" class="input-text" ng-model="newLocation.name" placeholder="{{textPlaceholder}}" ng-minlength="1" ng-maxlength="200" required />
+        <button class="button button-block button-gray" ng-click = "chat()" ng-disabled="myForm.$invalid"><span class="icon ion-android-send send"></span></button>
+       <!-- <button class="button button-block button-gray hide-on-keyboard-open" ng-click = "record()"><span class="icon ion-mic-a micro"></span></button>
+        <button class="button button-block button-purple" ng-click = "chat()" ng-disabled="myForm.$invalid"><span class="icon ion-android-send send"></span></button>
+-->
+    </div>
+    <div>
+
+ </ion-footer-bar>
 </ion-modal-view>
+

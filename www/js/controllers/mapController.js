@@ -181,7 +181,8 @@ angular.module('starter').controller('MapController', ['$scope',
       var text = $scope.newLocation.name;
       $scope.newLocation.name = ""
       $scope.chatbox.push({ message: text, entity: 'human'});
-       $scope.textPlaceholder = "...";
+       $scope.textPlaceholder = "... ..";
+
 
       var req = {
         method: 'POST',
