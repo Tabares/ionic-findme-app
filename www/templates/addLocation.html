@@ -4,36 +4,30 @@
       <div class="row">
         <div class="col">
           <div class="text-center main-font" >
-
-              <ul ng-repeat="message in chatbox">
-                <li id="bottom" ng-class="message.entity === 'human' ? 'user-box' : 'bot-box'" >{{message.message}}  </li>
+              <ul id="x">
+                <li class="bot-box" style="display: none" id="map-box" tabindex="1">
+                 <ion-content data-tap-disabled="true" ng-style="{ 'height': '200px'}">
+                  <leaflet defaults="map.defaults" center="map.center" markers="map.markers" ng-if="map">
+                  </leaflet>
+                 </ion-content>
+                </li>
+                <li class="user-box" style="display: none" id="camera-box" tabindex="1">
+                    <label class="item item-input photo-label" ng-hide="photo" >
+                      <img id="pic" ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center; width: 75px">
+                      <button class="button button-block button-hide" ng-click="removePhoto()"><span class="icon ion-close"></span> Delete photo</button>
+                    </label>
+                </li>
               </ul>
 
-              <div id="textdiv">text</div>
-              <button id="add">click this</button>
 
+              <!--<ul ng-repeat="message in chatbox">
+                <li id="bottom" ng-class="message.entity === 'human' ? 'user-box' : 'bot-box'" >{{message.message}}  </li>
+              </ul>-->
 
+              <div class="action-container">
+                <button class="button button-block button-white" ng-click = "takePhoto()" ng-hide="!photo"><span class="icon ion-ios-camera" ></span> Attach a photograph</button>
 
-            <ul style="display: none">
-              <li ng-class="message.entity === 'human' ? 'user-box' : 'bot-box'" >
-                 <ion-content data-tap-disabled="true" ng-style="{ 'height': '30%'}">
-                 <leaflet defaults="map.defaults" center="map.center" markers="map.markers" ng-if="map">
-                 </leaflet>
-                 </ion-content>
-              </li>
-            </ul>
-
-
-
-             <label class="item item-input photo-label" ng-hide="photo" >
-              <img id="pic" ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center; width: 75px">
-              <button class="button button-block button-hide" ng-click="removePhoto()"><span class="icon ion-close"></span> Delete photo</button>
-            </label>
-
-             <div class="action-container">
-      <button class="button button-block button-white" ng-click = "takePhoto()" ng-hide="!photo"><span class="icon ion-ios-camera" ></span> Attach a photograph</button>
-
-    </div>
+              </div>
 
             <!--<button class="button button-block button-purple" ng-click = "sendReport()" ng-disabled="myForm.$invalid">Send Report</button>-->
             <!--<button class="button button-block button-purple" ng-disabled="locationForm.$invalid" >Send Report</button>-->

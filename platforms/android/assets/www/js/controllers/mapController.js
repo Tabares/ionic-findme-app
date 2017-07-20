@@ -11,9 +11,6 @@ angular.module('starter').controller('MapController', ['$scope',
   '$cordovaDevice',
   '$http',
   '$cordovaKeyboard',
-  '$ionicScrollDelegate',
-  '$anchorScroll',
-  '$location',
   function(
     $scope,
     $cordovaGeolocation,
@@ -27,10 +24,7 @@ angular.module('starter').controller('MapController', ['$scope',
     $timeout,
     $cordovaDevice,
     $http,
-    $cordovaKeyboard,
-    $ionicScrollDelegate,
-    $anchorScroll,
-    $location
+    $cordovaKeyboard
   ) {
     /**
      * Once state loaded, get put map on scope.
@@ -184,12 +178,15 @@ angular.module('starter').controller('MapController', ['$scope',
 
     $scope.chat = function(){
       //var text = $speechInput.val();
-      angular.element('#textdiv').append('<p>Lorem ipsum dolor sit amet, solet nostrud concludaturque no eam. Ne quod recteque pri. Porro nulla zril mei eu. Eu nibh rebum pri, eu est maiorum menandri, ridens tamquam abhorreant te eum. Ipsum definiebas ad mel.</p><p>Lorem ipsum dolor sit amet, solet nostrud concludaturque no eam. Ne quod recteque pri. Porro nulla zril mei eu. Eu nibh rebum pri, eu est maiorum menandri, ridens tamquam abhorreant te eum. Ipsum definiebas ad mel.</p><p>Lorem ipsum dolor sit amet, solet nostrud concludaturque no eam. Ne quod recteque pri. Porro nulla zril mei eu. Eu nibh rebum pri, eu est maiorum menandri, ridens tamquam abhorreant te eum. Ipsum definiebas ad mel.</p>');
-
       var text = $scope.newLocation.name;
       $scope.newLocation.name = ""
-      $scope.chatbox.push({ message: text, entity: 'human'});
-      $scope.textPlaceholder = "... ...";
+      //$scope.chatbox.push({ message: text, entity: 'human'});
+      $scope.textPlaceholder = "...";
+      var myEl = angular.element( document.querySelector( '#x' ) );
+
+      myEl.append('<li id="bottom" class="user-box">'+ text +'</li>');
+
+
 
       var req = {
         method: 'POST',
@@ -202,23 +199,34 @@ angular.module('starter').controller('MapController', ['$scope',
         data: JSON.stringify({query: text, lang: "en", sessionId: "yaydevdiner"}),
       }
 
-
       $http(req).then(
         function(success) {
-         $scope.chatbox.push({ message: success.data.result.speech, entity: 'bot'});
+         //$scope.chatbox.push({ message: success.data.result.speech, entity: 'bot'});
+         myEl.append('<li id="bottom" class="bot-box">'+ success.data.result.speech +'</li>');
+         if(text === 'photo'){
+            myEl.append('<li class="user-box" ng-hide="photo">'+
+                    '<label class="item item-input photo-label" ng-hide="photo" >'+
+                      '<img id="pic" ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center; width: 75px">'+
+                      '<button class="button button-block button-hide" ng-click="removePhoto()"><span class="icon ion-close"></span> Delete photo</button>'+
+                    '</label>'+
+                '</li>');
+
+         }
+
+        if(text === 'location'){
+            myEl.append(' <li class="bot-box" >'+
+                 '<ion-content data-tap-disabled="true" style="height:200px}">'+
+                  '<leaflet defaults="map.defaults" center="map.center" markers="map.markers" ng-if="map">'+
+                  '</leaflet>'+
+                 '</ion-content>'+
+                '</li>');
+
+         }
         }, function(error) {
           // error
           console.log("Location error!");
           console.log(err);
         });
-
-
-        //$ionicScrollDelegate.scrollBottom(true);
-        //$location.hash('bottom');
-        // call $anchorScroll()
-        //$anchorScroll();
-
-
 
 
 
@@ -332,52 +340,24 @@ angular.module('starter').controller('MapController', ['$scope',
     $scope.sendReport = function() {
       $scope.postData();
       LocationsService.savedLocations.push($scope.newLocation);
-      //$scope.modal.hide();
-      //$scope.main = false;
+      $scope.modal.hide();
+      $scope.main = false;
       $scope.goTo(LocationsService.savedLocations.length - 1, 18);
     }
 
     $scope.postData = function() {
 
-      var file = $scope.imgURI,
-        uploadUrl = "http://starkappws.azurewebsites.net/stark-1.0-SNAPSHOT/reporter/sendIssue",
-        json = '{ "coordinate":  { "latitude": ' + $scope.newLocation.lat + ', "longitude": ' + $scope.newLocation.lng + '}, "description": "' + $scope.newLocation.name + '", "imageBase64": "'+$scope.imgURI+'"}',
+      var file = $scope.file3,
+        uploadUrl = "http://starkdns.southcentralus.cloudapp.azure.com:8080/safeReporter-1.0/reporter/sendIssue",
+        json = '{ "coordinate":  { "latitude": ' + $scope.newLocation.lat + ', "longitude": ' + $scope.newLocation.lng + '}, "description": "' + $scope.newLocation.name + '"}',
         fd = new FormData();
 
-
-      var req = {
-        method: 'POST',
-        url: uploadUrl,
-        contentType: "application/json",
-        //headers: {
-          //"Authorization": "Bearer " + $scope.accessToken
-        //},
-        data: json,
+      if(!$scope.newLocation.name){
+        $scope.newLocation.name  = "Car Crash";
       }
 
-      $http(req).then(
-        function(success) {
-          var message = success.data.response;
-          if(!message){
-            message = "El mensaje fue enviado la ambulancia va en camino"
-          }
-          $scope.chatbox.push({ message: message, entity: 'bot'});
-        }, function(error) {
-          // error
-          $scope.chatbox.push({ message: 'Error on the server please try again', entity: 'bot',});
-          console.log(error);
-          alert(JSON.stringify(error));
-
-        });
-
-      //http://starkappws.azurewebsites.net/stark-1.0-SNAPSHOT/reporter/sendIssue
-
-     // if(!$scope.newLocation.name){
-       // $scope.newLocation.name  = "Car Crash";
-     // }
-
       console.log(file);
-/*
+
       fd.append('report', json)
       fd.append('imageReport', file);
       $http.post(uploadUrl, fd, {
@@ -392,7 +372,7 @@ angular.module('starter').controller('MapController', ['$scope',
         })
         .error(function(error) {
           alert('error ' + error)
-        });*/
+        });
 
     }
 

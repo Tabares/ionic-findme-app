@@ -11,6 +11,7 @@ angular.module('starter').controller('MapController', ['$scope',
   '$cordovaDevice',
   '$http',
   '$cordovaKeyboard',
+  '$compile',
   function(
     $scope,
     $cordovaGeolocation,
@@ -24,7 +25,8 @@ angular.module('starter').controller('MapController', ['$scope',
     $timeout,
     $cordovaDevice,
     $http,
-    $cordovaKeyboard
+    $cordovaKeyboard,
+    $compile
   ) {
     /**
      * Once state loaded, get put map on scope.
@@ -180,8 +182,15 @@ angular.module('starter').controller('MapController', ['$scope',
       //var text = $speechInput.val();
       var text = $scope.newLocation.name;
       $scope.newLocation.name = ""
-      $scope.chatbox.push({ message: text, entity: 'human'});
-       $scope.textPlaceholder = "... ..";
+      //$scope.chatbox.push({ message: text, entity: 'human'});
+      $scope.textPlaceholder = "...";
+      ///var myEl = angular.element( document.querySelector( '#x' ) );
+
+      //myEl.append('<li class="user-box">'+ text +'</li>');
+
+      $('#x').append('<li class="user-box" tabindex="1">'+ text +'</li>');
+      $('li').last().addClass('active-li').focus();
+
 
 
       var req = {
@@ -197,12 +206,29 @@ angular.module('starter').controller('MapController', ['$scope',
 
       $http(req).then(
         function(success) {
-         $scope.chatbox.push({ message: success.data.result.speech, entity: 'bot'});
+         //$scope.chatbox.push({ message: success.data.result.speech, entity: 'bot'});
+
+         if(text == "Photo"){
+          $('#camera-box').appendTo('#x');
+         }
+         if(text == "Mapa"){
+          $('#map-box').appendTo('#x');
+          $('#map-box').show();
+          $('#x').append('<li class="bot-box" tabindex="1">Your location is '+success.data.result.speech+'</li>');
+         }
+         $('#x').append('<li class="bot-box" tabindex="1">'+ success.data.result.speech +'</li>');
+         $('li').last().addClass('active-li').focus();
+         console.log($scope.newLocation);
+
+
         }, function(error) {
           // error
           console.log("Location error!");
           console.log(err);
         });
+
+
+
 
 
 
@@ -362,6 +388,10 @@ angular.module('starter').controller('MapController', ['$scope',
     $scope.takePhoto = function() {
         $scope.photo = false;
 
+        $('#camera-box').appendTo('#x');
+        $('#camera-box').show();
+        $('li').last().addClass('active-li').focus();
+
         var options = {
           quality: 100,
           targetWidth: 1000,
@@ -378,6 +408,7 @@ angular.module('starter').controller('MapController', ['$scope',
           console.log(err);
           // An error occured. Show a message to the user
         });
+
       }
       //Brightness
     $scope.setBrightness = function(newBrightness) {
