@@ -18,16 +18,16 @@
                     </label>
                 </li>
               </ul>
+              <div class="action-container" style="display: none" >
+                <button class="button button-block button-white" ng-click = "takePhoto()" ng-hide="!photo"><span class="icon ion-ios-camera" ></span> Attach a photograph</button>
+              </div>
 
 
               <!--<ul ng-repeat="message in chatbox">
                 <li id="bottom" ng-class="message.entity === 'human' ? 'user-box' : 'bot-box'" >{{message.message}}  </li>
               </ul>-->
 
-              <div class="action-container">
-                <button class="button button-block button-white" ng-click = "takePhoto()" ng-hide="!photo"><span class="icon ion-ios-camera" ></span> Attach a photograph</button>
 
-              </div>
 
             <!--<button class="button button-block button-purple" ng-click = "sendReport()" ng-disabled="myForm.$invalid">Send Report</button>-->
             <!--<button class="button button-block button-purple" ng-disabled="locationForm.$invalid" >Send Report</button>-->
@@ -47,6 +47,7 @@
   </ion-header-bar>
   <ion-footer-bar align-title="center" keyboard-attach class="custom-footer" >
     <div class="row">
+
     <div class="speech-container">
         <textarea type="text" class="input-text" ng-model="newLocation.name" placeholder="{{textPlaceholder}}" ng-minlength="1" ng-maxlength="200" required />
         <button class="button button-block button-gray" ng-click = "chat()" ng-disabled="myForm.$invalid"><span class="icon ion-android-send send"></span></button>

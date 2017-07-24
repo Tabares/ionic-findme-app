@@ -166,16 +166,42 @@ angular.module('starter').controller('MapController', ['$scope',
           console.log(err);
         });
       $scope.modal.show();
-      $scope.accessToken = "f81d9aa60db1434eb52f95824f81c33e";
+      $scope.accessToken = "039c33463f4548e099b84ff4385c58a4";
       $scope.baseUrl = "https://api.api.ai/v1/";
       //$scope.chat();
       //$scope.chatbox = [{ message: 'hola', entity: 'human'}, { message: 'hola como estas', entity: 'bot'}];
       $scope.textPlaceholder = "What's Happenig?";
       $scope.keyboard = false;
       $scope.chatbox = [];
+      $scope.initialChat();
 
 
       ///$scope.bright();
+    }
+
+    $scope.initialChat = function(){
+      var req = {
+      method: 'POST',
+      url: $scope.baseUrl + "query",
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      headers: {
+      "Authorization": "Bearer " + $scope.accessToken
+      },
+      data: JSON.stringify({query: "Accidente en curso", lang: "es", sessionId: "yaydevdiner"}),
+      }
+
+      $http(req).then(
+      function(success) {
+
+      $('#x').append('<li class="bot-box" tabindex="1">'+ success.data.result.speech +'</li>');
+      $('li').last().addClass('active-li').focus();
+      }, function(error) {
+      // error
+      alert('Bot Error');
+      console.log("Location error!");
+      console.log(err);
+      });
     }
 
     $scope.chat = function(){
@@ -201,24 +227,28 @@ angular.module('starter').controller('MapController', ['$scope',
         headers: {
           "Authorization": "Bearer " + $scope.accessToken
         },
-        data: JSON.stringify({query: text, lang: "en", sessionId: "yaydevdiner"}),
+        data: JSON.stringify({query: text, lang: "es", sessionId: "yaydevdiner"}),
       }
 
       $http(req).then(
         function(success) {
          //$scope.chatbox.push({ message: success.data.result.speech, entity: 'bot'});
 
-         if(text == "Photo"){
-          $('#camera-box').appendTo('#x');
-         }
-         if(text == "Mapa"){
+
+         if(text == "Mapa" || text == "Ok" || text == "Seguro" || text == "Desde luego" || text == "Si"){
           $('#map-box').appendTo('#x');
           $('#map-box').show();
-          $('#x').append('<li class="bot-box" tabindex="1">Your location is '+success.data.result.speech+'</li>');
+          //$('#x').append('<li class="bot-box" tabindex="1">Your location is '+success.data.result.speech+'</li>');
          }
          $('#x').append('<li class="bot-box" tabindex="1">'+ success.data.result.speech +'</li>');
          $('li').last().addClass('active-li').focus();
-         console.log($scope.newLocation);
+
+         if( success.data.result.speech == "¿Podrías tomar una foto del percance?"){
+          $('.action-container').appendTo('#x');
+          $('.action-container').show();
+          $('#x').append('<li class="bot-box" tabindex="1">'+ 'Utiliza este botón por favor' +'</li>');
+          $('li').last().addClass('active-li').focus();
+         }
 
 
         }, function(error) {
@@ -404,9 +434,13 @@ angular.module('starter').controller('MapController', ['$scope',
         $cordovaCamera.getPicture(options).then(function(imageData) {
           $scope.imgURI = "data:image/jpeg;base64," + imageData;
           $scope.file3 = imageData; //fail on server
+          $scope.newLocation.name = "Enviando foto";
+          $scope.chatbox();
+          $scope.sendReport();
         }, function(err) {
           console.log(err);
           // An error occured. Show a message to the user
+           $scope.sendReport();
         });
 
       }
