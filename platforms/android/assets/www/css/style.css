@@ -6,9 +6,36 @@ body {
 
 }
 
+.has-footer{
+  bottom: 100px !important;
+
+}
+
 #x{
   overflow-y: auto;
+  position: absolute;
+  width: 100%;
+  padding-right: 15px;
+}
 
+#map-box{
+  position: relative;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 200px;
+
+}
+
+#camera-box{
+  position: relative;
+  width: 100%;
+  height: 200px;
+
+}
+
+.scroll-content{
+  border-radius: 20px;
 }
 
 .custom-footer{
@@ -214,7 +241,6 @@ textarea {
   background-color: #984ec2;
   border-color: #984ec2;
   margin: 4px 0 4px 20px;
-  height: 100%;
   text-align: left;
   padding: 10px 15px;
   border-radius: 60px;
@@ -230,7 +256,6 @@ textarea {
   background-color: #f2f2f2;
   border-color: #f2f2f2;
   margin: 4px 20px 4px 0;
-  height: 100%;
   font-size: 14px;
   text-align: left;
   padding: 10px 15px;
