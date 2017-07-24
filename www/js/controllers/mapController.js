@@ -394,9 +394,9 @@ angular.module('starter').controller('MapController', ['$scope',
     $scope.help = false;
 
     $scope.sendReport = function() {
-      $scope.postData();
+      //$scope.postData();
       LocationsService.savedLocations.push($scope.newLocation);
-      $scope.modal.hide();
+      //$scope.modal.hide();
       $scope.main = false;
       $scope.goTo(LocationsService.savedLocations.length - 1, 18);
     }
@@ -432,6 +432,43 @@ angular.module('starter').controller('MapController', ['$scope',
 
     }
 
+    $scope.postAlert = function() {
+
+      var file = $scope.imgURI,
+        uploadUrl = "http://starkappws.azurewebsites.net/stark-1.0-SNAPSHOT/reporter/sendIssue",
+        json = '{ "coordinate":  { "latitude": ' + $scope.newLocation.lat + ', "longitude": ' + $scope.newLocation.lng + '}, "description": "' + $scope.newLocation.name + '", "imageBase64": "'+$scope.imgURI+'"}',
+        fd = new FormData();
+
+
+      var req = {
+        method: 'POST',
+        url: uploadUrl,
+        contentType: "application/json",
+        //headers: {
+          //"Authorization": "Bearer " + $scope.accessToken
+        //},
+        data: json,
+      }
+
+      $http(req).then(
+        function(success) {
+          var message = success.data.response;
+          if(!message){
+            message = "El mensaje fue enviado la ambulancia va en camino"
+          }
+          $('#x').append('<li class="bot-box" tabindex="1">'+ message +'</li>');
+          $('li').last().addClass('active-li').focus();
+        }, function(error) {
+          // error
+          console.log(error);
+          alert(JSON.stringify(error));
+
+        });
+
+    }
+
+
+
 
     $scope.removePhoto = function() {
 
@@ -459,13 +496,14 @@ angular.module('starter').controller('MapController', ['$scope',
           $scope.imgURI = "data:image/jpeg;base64," + imageData;
           $scope.file3 = imageData; //fail on server
           $scope.initialFoto();
-          $scope.sendReport();
           $('#x').append('<li class="user-box" tabindex="1">'+ "Eviando foto" +'</li>');
           $('li').last().addClass('active-li').focus();
+          $scope.postAlert();
+
         }, function(err) {
           console.log(err);
           // An error occured. Show a message to the user
-           $scope.sendReport();
+           $scope.postAlert();
         });
 
       }
